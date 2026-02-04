@@ -89,8 +89,7 @@ public class GestorTareas {
 		for(int i = 0; i < tareas.size(); i++) {
 			String estado = completadas.get(i) ? "[X]" : "[ ]";
 			System.out.printf("%d. %s %s%n",i+1,estado, tareas.get(i));
-		}
-		
+		}				
 	}
 	
 	static void marcarCompletada() {
@@ -103,8 +102,7 @@ public class GestorTareas {
 			System.out.println("Tarea marcada como completada");
 		} else {
 			System.out.println("Indice inválido");
-		}
-				
+		}	
 	}
 	
 	static void eliminarTarea() {
