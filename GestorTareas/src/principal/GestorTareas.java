@@ -23,8 +23,8 @@ public class GestorTareas {
 	static Scanner sc = new Scanner(System.in);
 	
 	// Estructuras para almacenar
-	static List<String> tareas = new ArrayList<>();
-	static List<Boolean> completadas = new ArrayList<>();
+	static List<Tarea> tareas = new ArrayList<>();
+	//static List<Boolean> completadas = new ArrayList<>();
 
 	public static void main(String[] args) {
 		
@@ -39,7 +39,7 @@ public class GestorTareas {
 				case 2 -> mostrarTareas();
 				case 3 -> marcarCompletada();
 				case 4 -> eliminarTarea();
-				case 5 -> ordenarTareas();
+				//case 5 -> ordenarTareas();
 				case 6 -> System.out.println("Saliendo...");
 				default -> System.out.println("Opción inválida.");
 			}
@@ -70,11 +70,14 @@ public class GestorTareas {
 	}
 	
 	static void agregarTarea() {
-		System.out.print("Ingrese la tarea ");
+		System.out.print("Ingrese el código ");
+		String codigo = sc.nextLine();
+		
+		System.out.print("\nIngrese la tarea ");
 		String tarea = sc.nextLine();
 		
-		tareas.add(tarea);
-		completadas.add(false);
+		tareas.add(new Tarea(codigo, tarea, false));
+		//completadas.add(false);
 		
 		System.out.println("Tarea agregada.\n");
 	}
@@ -87,22 +90,37 @@ public class GestorTareas {
 		
 		System.out.println("\nListado de tareas");
 		for(int i = 0; i < tareas.size(); i++) {
-			String estado = completadas.get(i) ? "[X]" : "[ ]";
-			System.out.printf("%d. %s %s%n",i+1,estado, tareas.get(i));
+			String estado = tareas.get(i).isCompletada() ? "[X]" : "[ ]";
+			System.out.printf("%d. %s %s %s%n",i+1,  estado, tareas.get(i).getCodigo(), tareas.get(i).getTarea());
 		}				
 	}
 	
 	static void marcarCompletada() {
 		mostrarTareas();
 		if (tareas.isEmpty()) return;
-		
-		int indice = leerEntero("Numero de tarea a completar: ") -1;
+		boolean exito = false;
+		//int indice = leerEntero("Numero de tarea a completar: ") -1;
+		System.out.print("Código de tarea a completar: ");
+		String codigo = sc.nextLine();
+		for(Tarea t: tareas) {
+			if (t.getCodigo().equals(codigo)) {
+				t.setCompletada(true);
+				exito = true;
+			}
+		}
+		if(exito) {
+			System.out.println("Tarea marcada como completada");
+		}else {
+			System.out.println("Código inválido");
+		}
+		/*
 		if (indiceValido(indice)) {
 			completadas.set(indice, true);
 			System.out.println("Tarea marcada como completada");
 		} else {
 			System.out.println("Indice inválido");
-		}	
+		}
+		*/	
 	}
 	
 	static void eliminarTarea() {
@@ -112,7 +130,7 @@ public class GestorTareas {
 		
 		if (indiceValido(indice)) {
 			tareas.remove(indice);
-			completadas.remove(indice);
+			//completadas.remove(indice);
 			System.out.println("Tarea eliminada");
 		} else {
 			System.out.println("Indice inválido");
@@ -122,7 +140,7 @@ public class GestorTareas {
 	static boolean indiceValido(int i) {
 		return i >= 0 && i < tareas.size();
 	}
-	
+	/*
 	static void ordenarTareas() {
 		if (tareas.isEmpty()) {
 			System.out.println("No hay tareas a ordenar.");
@@ -135,7 +153,7 @@ public class GestorTareas {
 			indices.add(i);
 		}
 		
-		indices.sort(Comparator.comparing(tareas::get));
+		//indices.sort(Comparator.comparing(tareas::get));
 		
 		// Nuevas Listas
 		
@@ -153,5 +171,48 @@ public class GestorTareas {
 		System.out.println("Tareas ordenadas alfabeticamente");
 		mostrarTareas();
 	}
+*/
+}
 
+class Tarea {
+	
+	private String codigo;
+	private String tarea;
+	private boolean completada;
+	
+	public Tarea(String codigo, String tarea, boolean completada) {
+		this.codigo = codigo;
+		this.tarea = tarea;
+		this.completada = completada;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
+	}
+
+	public String getTarea() {
+		return tarea;
+	}
+
+	public void setTarea(String tarea) {
+		this.tarea = tarea;
+	}
+
+	public boolean isCompletada() {
+		return completada;
+	}
+
+	public void setCompletada(boolean completada) {
+		this.completada = completada;
+	}
+
+	public String mostrar() {
+		return "\nCódigo: " + codigo + "\nTarea: " + tarea + "\nCompletada: " + (completada ? "[X]" : "[ ]");
+	}
+	
+	
 }

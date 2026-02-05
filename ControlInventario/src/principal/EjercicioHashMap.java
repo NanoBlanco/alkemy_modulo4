@@ -6,12 +6,12 @@ import java.util.Scanner;
 public class EjercicioHashMap {
 
 	static HashMap<String, Producto> inventario = new HashMap<>();
-	static Scanner sc = new Scanner(System.in);		
+	static Scanner sc = new Scanner(System.in);	
+	
 	public static void main(String[] args) {
 
 		int opcion;
 		registrarProductos();
-		
 		do {
 			mostrarMenu();
 			opcion = leerEntero("Seleccione una opción: ");
