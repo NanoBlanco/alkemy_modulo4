@@ -1,23 +1,20 @@
 package principal;
 
+import java.util.List;
+
+import modelo.Cliente;
 import modelo.Cuenta;
 
 public class AppCuenta {
 
 	public static void main(String[] args) {
 		
-		Cuenta cuenta1 = new Cuenta(1,"Renny Blanco",999.99);
-		System.out.println("Objeto creado "+cuenta1.getNumeroCuenta()+ " - "+cuenta1.getTitular()+" -> $"+cuenta1.getSaldo());
+		Cliente cliente1 = new Cliente(1,"Renny Blanco", List.of(new Cuenta(1, 1, "Ahorro", 100.0), new Cuenta(2,1,"Corriente", 500.0)));		
+		cliente1.getCuenta().get(0).depositar(50);
+		cliente1.mostrarCliente();
 		
-		Cuenta cuenta2 = new Cuenta();
-		cuenta2.setNumeroCuenta(2);
-		cuenta2.setTitular("Camilo Montalvan");
-		cuenta2.setSaldo(100.00);
-		
-		System.out.println("Objeto creado "+cuenta2.getNumeroCuenta()+ " - "+cuenta2.getTitular()+" -> $"+cuenta2.getSaldo());
-		
-		Cuenta cuenta3 = new Cuenta(3,"Valentina Villarroel", 200.00);
-		System.out.println("Cuenta creada "+cuenta3.mostrar());
+		Cliente cliente2 = new Cliente(2,"Sebastian Galaz", List.of(new Cuenta(3, 2, "Ahorro", 100.0)));
+		cliente2.mostrarCliente();
 	}
 
 }

@@ -2,23 +2,19 @@ package modelo;
 
 public class Cuenta {
 	
-	private static int contador = 0; // Variable de clase
 	private int numeroCuenta;
-	private String titular;
+	private int idTitular;
+	private String tipoCuenta;
 	private double saldo;
 	private static final double SALDO_MINIMO = 0;
 	
 	public Cuenta() { }
 	
-	public Cuenta(int cuenta, String nombre, double saldo) {
+	public Cuenta(int cuenta, int id_titular, String tipo, double saldo) {
 		this.numeroCuenta = cuenta;
-		this.titular = nombre;
+		this.idTitular = id_titular;
+		this.tipoCuenta = tipo;
 		this.saldo = saldo >= SALDO_MINIMO ? saldo : SALDO_MINIMO;
-		contador++;
-	}
-
-	public static int getContador() {
-		return contador;
 	}
 	
 	public int getNumeroCuenta() {
@@ -29,13 +25,13 @@ public class Cuenta {
 		this.numeroCuenta = cuenta;
 	}
 	
-	public String getTitular() {
-		return this.titular;
+	public int getTitular() {
+		return this.idTitular;
 	}
 	
-	public void setTitular(String nombre) {
-		if(nombre != null && !nombre.trim().isEmpty()) {			
-			this.titular = nombre;
+	public void setTitular(int id_titular) {
+		if(id_titular > 0) {			
+			this.idTitular = idTitular;
 		}
 	}
 	
@@ -45,6 +41,15 @@ public class Cuenta {
 	
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
+	}
+
+	
+	public String getTipoCuenta() {
+		return tipoCuenta;
+	}
+
+	public void setTipoCuenta(String tipoCuenta) {
+		this.tipoCuenta = tipoCuenta;
 	}
 
 	// Métodos de negocio
@@ -64,8 +69,8 @@ public class Cuenta {
 		return false;
 	}
 	
-	public String mostrar() {
-		return "\nNumeroCuenta: " + numeroCuenta + "\nTitular: " + titular + "\nSaldo $" + saldo;
+	public void mostrar() {
+		System.out.println("\nNumeroCuenta: " + numeroCuenta +"\nTipo de Cuenta: "+ tipoCuenta + "\nSaldo $" + saldo);
 	}
 	
 	
