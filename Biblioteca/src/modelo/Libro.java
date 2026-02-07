@@ -1,40 +1,25 @@
 package modelo;
 
-public class Libro {
+public class Libro extends MaterialBiblioteca {
 
 	private String isbn;
-	private String titulo;
 	private String autor;
-	private boolean prestado;
+	private int numeroPaginas;
 	
-	public Libro(String isbn, String titulo, String autor) {
+	public Libro(String codigo, String titulo, int año, String isbn,  String autor, int paginas) {
+		super(codigo, titulo, año);
 		this.isbn = isbn;
-		this.titulo = titulo;
 		this.autor = autor;
-		this.prestado = false;
+		this.numeroPaginas = paginas;
 	}
 
-	public String getIsbn() {
-		return isbn;
-	}
+	public String getIsbn() {return isbn;}
 
-	public boolean isPrestado() {
-		return prestado;
-	}
-
-	public void prestar() {
-		if(!prestado) {
-			prestado = true;
-		}
-	}
 	
-	public void devolver() {
-		if(prestado) {
-			prestado = false;
-		}
-	}
-	
-	public void mostrarLibro() {
-		System.out.println("\nISBN: "+isbn+"\nTitulo: "+titulo+"\nAutor: "+autor+(!prestado ? " Disponible":" Prestado"));
+	@Override
+	public void mostrarDetalles() {
+		System.out.println("Libro");
+		System.out.println("\nCodigo: "+codigo+"\nTitulo: "+titulo+"\nAutor: "+autor+"\nISBN: "+isbn+"\nNumero de Paginas "+numeroPaginas+"\nAño de Publicacion "+añoPublicacion+"\nEstado "+estado.getDescripcion());
+		
 	}
 }

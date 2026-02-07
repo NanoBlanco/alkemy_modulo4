@@ -8,14 +8,16 @@ import java.util.Scanner;
 
 import modelo.Estudiante;
 import modelo.Libro;
+import modelo.MaterialBiblioteca;
 import modelo.Prestamo;
 import modelo.Profesor;
+import modelo.Revista;
 import modelo.Usuario;
 
 public class AppBiblioteca {
 
 	static Scanner sc = new Scanner(System.in);
-	static Map<String, Libro> biblioteca = new HashMap<>();
+	static Map<String, MaterialBiblioteca> biblioteca = new HashMap<>();
 	static Map<String, Usuario> usuarios = new HashMap<>();
 	static List<Prestamo> prestamos = new ArrayList<>() ;
 	
@@ -27,7 +29,7 @@ public class AppBiblioteca {
 			opcion = leerEntero("Seleccione una opción: ");
 			
 			switch(opcion) {
-				case 1 -> agregarLibro();
+				case 1 -> agregarMaterial();
 				case 2 -> registrarUsuario();
 				case 3 -> listarLibros();
 				case 4 -> prestarLibro();
@@ -42,7 +44,7 @@ public class AppBiblioteca {
 	static void mostrarMenu() {
 		System.out.println("\nBiblioteca");
 		System.out.println("-".repeat(20));
-		System.out.println("1. Agregar libro");
+		System.out.println("1. Agregar Material");
 		System.out.println("2. Registrar usuario");
 		System.out.println("3. Listar libros");
 		System.out.println("4. Prestar libro");
@@ -61,23 +63,66 @@ public class AppBiblioteca {
 		}
 	}
 	
-	static void agregarLibro() {
-		System.out.print("ISBN: ");
-		String isbn = sc.nextLine();
+	static void agregarMaterial() {
+		System.out.println("Tipo de Material");
+		System.out.println("1. Libro / 2. Revista");
+		int tipoMat = sc.nextInt();
 		
-		if(biblioteca.containsKey(isbn)) {
-			System.out.println("El libro ya existe.");
-			return;
+		if (tipoMat == 1) {
+			System.out.print("Codigo: ");
+			String codigo = sc.next();
+
+			if(biblioteca.containsKey(codigo)) {
+				System.out.println("El libro ya existe.");
+				return;
+			}
+
+			System.out.print("Titulo: ");
+			String titulo = sc.next();
+
+			System.out.print("Año de Publicacion");
+			int año = sc.nextInt();
+			
+			System.out.print("Autor: ");
+			String autor = sc.next();	
+			
+			System.out.print("ISBN: ");
+			String isbn = sc.next();
+
+			System.out.print("Numero de Paginas: ");
+			int paginas = sc.nextInt();
+			
+			biblioteca.put(codigo, new Libro(codigo, titulo, año, isbn, autor,  paginas));
+			System.out.println("Libro Agregado.");	
+			
+		} else if (tipoMat == 2) {
+			System.out.print("Codigo: ");
+			String codigo = sc.next();
+
+			if(biblioteca.containsKey(codigo)) {
+				System.out.println("El libro ya existe.");
+				return;
+			}
+
+			System.out.print("Titulo: ");
+			String titulo = sc.next();
+
+			System.out.print("Año de Publicacion");
+			int año = sc.nextInt();
+			
+			System.out.print("Edicion: ");
+			int edicion = sc.nextInt();	
+			
+			System.out.print("Mes: ");
+			String mes = sc.next();
+
+			biblioteca.put(codigo, new Revista(codigo, titulo, año, edicion, mes));
+			System.out.println("Revista Agregada.");	
+			
+		}else {
+			System.out.println("Debe seleccionar entre uno u otro");
 		}
 		
-		System.out.print("Titulo: ");
-		String titulo = sc.nextLine();
-		
-		System.out.print("Autor: ");
-		String autor = sc.nextLine();
-		
-		biblioteca.put(isbn, new Libro(isbn, titulo, autor));
-		System.out.println("Libro Agregado.");
 	}
 	
 	static void registrarUsuario() {
@@ -106,23 +151,23 @@ public class AppBiblioteca {
 	
 	static void listarLibros() {
 		if(biblioteca.isEmpty()) {
-			System.out.println("No hay libros.");
+			System.out.println("No hay Material.");
 		}else {
-			biblioteca.values().forEach(Libro::mostrarLibro);
+			biblioteca.values().forEach(MaterialBiblioteca::mostrarDetalles);
 		}
 	}
 	
 	static void prestarLibro() {
-		System.out.print("ISBN: ");
-		String isbn = sc.nextLine();
+		System.out.print("Codigo: ");
+		String codigo = sc.nextLine();
 		
-		if(!biblioteca.containsKey(isbn)) {
-			System.out.println("El libro NO existe.");
+		if(!biblioteca.containsKey(codigo)) {
+			System.out.println("El material NO existe.");
 			return;
 		}else {
-			Libro libro = biblioteca.get(isbn);
-			if(libro.isPrestado()) {
-				System.out.println("El libro está prestado.");
+			MaterialBiblioteca libro = biblioteca.get(codigo);
+			if(!libro.estaDisponible()) {
+				System.out.println("El Material está prestado.");
 			}else {
 				System.out.println("Id Usuario");
 				String id = sc.nextLine();
@@ -130,7 +175,7 @@ public class AppBiblioteca {
 					Usuario prestador = usuarios.get(id);
 					if(prestador.puedePedir()) {
 						prestador.prestarLibro();
-						libro.prestar();
+						libro.prestar(prestador.getNombre());
 						prestamos.add(new Prestamo(prestador, libro));
 						System.out.println("Préstamo Realizado");
 					}else {
@@ -143,26 +188,26 @@ public class AppBiblioteca {
 	
 	static void devolverLibro() {
 		Prestamo prestamoEncontrado = null;
-		System.out.print("ISBN: ");
-		String isbn = sc.nextLine();
+		System.out.print("Codigo: ");
+		String codigo = sc.nextLine();
 		
-		if(!biblioteca.containsKey(isbn)) {
-			System.out.println("El libro NO existe.");
+		if(!biblioteca.containsKey(codigo)) {
+			System.out.println("El material NO existe.");
 			return;
 		}else {
-			Libro libro = biblioteca.get(isbn);
-			if(!libro.isPrestado()) {
-				System.out.println("El libro NO está prestado.");
+			MaterialBiblioteca libro = biblioteca.get(codigo);
+			if(libro.estaDisponible()) {
+				System.out.println("El material NO está prestado.");
 			}else {
 				for(Prestamo p: prestamos) {
-					if (p.getLibro().getIsbn().equals(isbn)) {
+					if (p.getLibro().getCodigo().equals(codigo)) {
 						prestamoEncontrado = p;
 					}
 				}
 				prestamoEncontrado.getLibro().devolver();
 				prestamoEncontrado.getUsuario().devolverLibro();
 				prestamos.remove(prestamoEncontrado);
-				System.out.println("libro devuelto");
+				System.out.println("Material devuelto");
 			}
 		}
 	}

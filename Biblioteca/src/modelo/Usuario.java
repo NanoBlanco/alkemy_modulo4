@@ -29,6 +29,9 @@ public abstract class Usuario {
 		return this.id;
 	}
 	
+	public String getNombre() {
+		return nombre;
+	}
 	public void mostrar() {
 		System.out.println("Nombre: "+nombre+" ("+id+")");
 	}

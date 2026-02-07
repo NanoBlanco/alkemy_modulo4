@@ -4,13 +4,13 @@ public class Cuenta {
 	
 	private int numeroCuenta;
 	private int idTitular;
-	private String tipoCuenta;
+	private TipoCuenta tipoCuenta;
 	private double saldo;
 	private static final double SALDO_MINIMO = 0;
 	
 	public Cuenta() { }
 	
-	public Cuenta(int cuenta, int id_titular, String tipo, double saldo) {
+	public Cuenta(int cuenta, int id_titular, TipoCuenta tipo, double saldo) {
 		this.numeroCuenta = cuenta;
 		this.idTitular = id_titular;
 		this.tipoCuenta = tipo;
@@ -44,11 +44,11 @@ public class Cuenta {
 	}
 
 	
-	public String getTipoCuenta() {
+	public TipoCuenta getTipoCuenta() {
 		return tipoCuenta;
 	}
 
-	public void setTipoCuenta(String tipoCuenta) {
+	public void setTipoCuenta(TipoCuenta tipoCuenta) {
 		this.tipoCuenta = tipoCuenta;
 	}
 
