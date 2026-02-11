@@ -2,6 +2,7 @@ package modelos;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Billetera {
 	
@@ -15,6 +16,7 @@ public class Billetera {
 	
 	public void depositar(Moneda m, int monto) {
 		saldos.put(m, saldos.get(m)+monto);
+		System.out.println("Depósito realizado.");
 	}
 	
 	public boolean retirar(Moneda m, int monto) {
@@ -22,6 +24,7 @@ public class Billetera {
 		if(saldo < monto) return false;
 		
 		saldos.put(m, saldo-monto);
+		System.out.println("Retiro Realizado.");
 		return true;
 	}
 	
@@ -32,4 +35,20 @@ public class Billetera {
 	public void mostrarSaldos() {
 		saldos.forEach((m,s)->System.out.println(m+" : "+s));
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(saldos);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null) return false;
+		if (getClass() != obj.getClass()) return false;
+		Billetera other = (Billetera) obj;
+		return Objects.equals(saldos, other.saldos);
+	}
+	
+	
 }

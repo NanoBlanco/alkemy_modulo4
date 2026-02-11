@@ -7,7 +7,6 @@ public class Usuario {
 	private Billetera billetera;
 	
 	public Usuario(int id, String nombre) {
-		super();
 		this.id = id;
 		this.nombre = nombre;
 		this.billetera = new Billetera();
@@ -15,6 +14,10 @@ public class Usuario {
 
 	public String getNombre() {
 		return nombre;
+	}
+	
+	public int getId() {
+		return id;
 	}
 
 	public Billetera getBilletera() {
@@ -25,6 +28,5 @@ public class Usuario {
 	public String toString() {
 		return id + " - " + nombre;
 	}
-	
 	
 }
