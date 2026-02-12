@@ -2,12 +2,19 @@ package servicios;
 
 import java.util.Scanner;
 
+import excepciones.SaldoInsuficienteException;
 import modelos.Moneda;
 import modelos.Usuario;
 
 public class BilleteraServicio {
 	
-	UsuarioServicio usuario = new UsuarioServicio();
+	UsuarioServicio usuario;
+	LogsTransacciones logger;
+	
+	public BilleteraServicio(UsuarioServicio usuario, LogsTransacciones logger) {
+		this.usuario = usuario;
+		this.logger = logger;
+	}
 	
 	private int leerId(Scanner sc) {		
 		System.out.println("Ingrese Id del usuario: ");
@@ -36,14 +43,21 @@ public class BilleteraServicio {
 		int id = leerId(sc);
 		String mo = leerMoneda(sc);
 		int monto = leerMonto(sc);
-		usuario.operacionesUsuario(id, 1, mo, monto);
+		usuario.depositoUsuario(id, mo, monto);
+		logger.escribirLog("INFO", "Deposito realizado a usuarioId "+id+" por un monto "+monto+" a la moneda "+mo);
 	}
 	
-	public void retirar(Scanner sc) {
-		int id = leerId(sc);
-		String mo = leerMoneda(sc);		
-		int monto = leerMonto(sc);
-		usuario.operacionesUsuario(id, 2, mo, monto);
+	public void retirar(Scanner sc) throws SaldoInsuficienteException  {
+		try {			
+			int id = leerId(sc);
+			String mo = leerMoneda(sc);		
+			int monto = leerMonto(sc);
+			usuario.retiroUsuario(id, mo, monto);
+			logger.escribirLog("INFO", "Retiro realizado a usuarioId "+id+" por un monto "+monto+" a la moneda "+mo);
+		} catch(SaldoInsuficienteException e) {
+			logger.escribirLog("ERROR", "El saldo no es suficiente para el retiro");
+			System.out.println("El saldo para la moneda NO es suficiente.");
+		}
 	}
 	
 	public void transferir(Scanner sc) {
@@ -60,11 +74,13 @@ public class BilleteraServicio {
 		boolean ok = origen.getBilletera().retirar(m, monto);
 		
 		if(!ok) {
+			logger.escribirLog("ERROR", "Tranferencia NO realizada a usuario "+destino.getNombre()+" por un monto "+monto+" a la moneda "+m);
 			System.out.println("Saldo Insuficiente.");
 			return;
 		}
 		
 		destino.getBilletera().depositar(m, monto);
+		logger.escribirLog("INFO", "Tranferencia realizada a usuario "+destino.getNombre()+" por un monto "+monto+" a la moneda "+m);
 		System.out.println("Transferencia realizada.");
 	}
 

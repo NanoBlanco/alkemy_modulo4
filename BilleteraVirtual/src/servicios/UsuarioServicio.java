@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import excepciones.SaldoInsuficienteException;
 import modelos.Moneda;
 import modelos.Usuario;
 
@@ -16,7 +17,7 @@ public class UsuarioServicio {
 		int id = sc.nextInt();
 		System.out.print("Ingrese el Nombre: ");
 		String nombre = sc.next();
-		if(!nombre.isEmpty() || !nombre.isBlank()) {			
+		if(nombre != null && !nombre.isBlank()) {			
 			Usuario u = new Usuario(id, nombre);
 			usuarios.add(u);
 			System.out.println("Usuario Agregado.");
@@ -43,15 +44,22 @@ public class UsuarioServicio {
 		}
 	}
 	
-	public void operacionesUsuario(int id, int op, String m, int monto) {
+	public void depositoUsuario(int id, String m, int monto){
 		if(monto < 0) return;
 		Usuario u = getUsuario(id);
 		if (u != null){
-			switch(op) {
-				case 1 -> u.getBilletera().depositar(Moneda.valueOf(m), monto);
-				case 2 -> u.getBilletera().retirar(Moneda.valueOf(m), monto);
-				default -> System.out.println("Opción inválida.");
-			}
+			u.getBilletera().depositar(Moneda.valueOf(m), monto);
+		}else {
+			System.out.println("El Id no existe");
+		}
+	}
+	
+	public void retiroUsuario(int id, String m, int monto) throws SaldoInsuficienteException {
+		if(monto < 0) return;
+		Usuario u = getUsuario(id);
+		if (u != null){
+			boolean exito = u.getBilletera().retirar(Moneda.valueOf(m), monto); 
+			if (!exito) throw new SaldoInsuficienteException("El monto "+monto+" para la moneda "+Moneda.valueOf(m)+" NO es suficiente.");
 		}else {
 			System.out.println("El Id no existe");
 		}
