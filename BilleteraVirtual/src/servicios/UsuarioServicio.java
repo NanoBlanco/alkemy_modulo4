@@ -17,17 +17,31 @@ public class UsuarioServicio {
 	}
 	
 	public void agregarUsuario(Scanner sc) {
-		System.out.print("Ingrese el Id: ");
-		int id = sc.nextInt();
-		System.out.print("Ingrese el Nombre: ");
-		String nombre = sc.next();
-		if(nombre != null && !nombre.isBlank()) {			
-			Usuario u = new Usuario(id, nombre);
-			usuarios.add(u);
-			System.out.println("Usuario Agregado.");
+		System.out.print("Ingresa tu edad: ");
+		int edad = sc.nextInt();
+		if(esMayor(edad)) {
+			System.out.print("Ingrese el Id: ");
+			int id = sc.nextInt();
+			System.out.print("Ingrese el Nombre: ");
+			String nombre = sc.next();
+			if(nombre != null && !nombre.isBlank()) {			
+				Usuario u = creaUsuario(id, nombre);
+				usuarios.add(u);
+				System.out.println("Usuario Agregado.");
+			}else {
+				System.out.println("Debe ingresar un nombre");
+			}
 		}else {
-			System.out.println("Debe ingresar un nombre");
+			System.out.println("Debe ser mayor de edad para abrir la cuenta");
 		}
+	}
+	
+	public Usuario creaUsuario(int id, String nombre) {
+		Usuario u = new Usuario(id, nombre);
+		return u;
+	}
+	public boolean esMayor(int edad) {
+		return edad >= 18;
 	}
 	
 	public Usuario getUsuario(int id) {

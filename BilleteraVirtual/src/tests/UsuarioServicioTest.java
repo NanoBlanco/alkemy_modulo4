@@ -1,7 +1,9 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -50,5 +52,17 @@ public class UsuarioServicioTest {
 			us.depositoUsuario(1, "CLP", 500);
 			us.retiroUsuario(1, "CLP", 600);
 		});
+	}
+	
+	@Test
+	@DisplayName("Revisa método esMayor, si es Mayor")
+	void testEsMayor() {
+		assertTrue(us.esMayor(18));
+	}
+	
+	@Test
+	@DisplayName("Revisa método esMayor, si es menor")
+	void testEsMenor() {
+		assertFalse(us.esMayor(17));
 	}
 }

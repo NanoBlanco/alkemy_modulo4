@@ -2,10 +2,14 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import principal.Calculadora;
 
@@ -18,13 +22,24 @@ class CalculadoraTest {
 		calc = new Calculadora();
 	}
 
-	@Test
+	@ParameterizedTest
+	@ValueSource(ints = {1,2,5,10})
+	void positivos(int n) {
+		assertTrue(n > 0);
+	}
+	
+	@ParameterizedTest(name = "{0} + {1} debe ser {2}")
+	@CsvSource({
+		"2,3,5",
+		"1,1,2",
+		"5,5,10"
+	})
 	@DisplayName("Verifica el método sumar")
-	void testSumar() {
+	void testSumar(int a, int b, int esperado) {
 		
-		int resultado = calc.sumar(2, 3);
+		int resultado = calc.sumar(a, b);
 		
-		assertEquals(5, resultado);
+		assertEquals(esperado, resultado);
 	}
 	
 	@Test
