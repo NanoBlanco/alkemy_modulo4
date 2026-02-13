@@ -13,7 +13,7 @@ public class UsuarioServicio {
 	private List<Usuario> usuarios = new ArrayList<>();
 	
 	public UsuarioServicio(Usuario u) {
-		usuarios.add(u);
+		if (u!=null) usuarios.add(u);
 	}
 	
 	public void agregarUsuario(Scanner sc) {
