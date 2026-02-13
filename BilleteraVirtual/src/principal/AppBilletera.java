@@ -16,7 +16,7 @@ public class AppBilletera {
 		
 		try (Scanner sc = new Scanner(System.in)) {
 			
-			UsuarioServicio usuario = new UsuarioServicio();
+			UsuarioServicio usuario = new UsuarioServicio(null);
 			LogsTransacciones logger = new LogsTransacciones("transacciones.log");
 			BilleteraServicio sistema = new BilleteraServicio(usuario, logger);
 			

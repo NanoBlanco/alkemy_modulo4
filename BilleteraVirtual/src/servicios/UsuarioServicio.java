@@ -12,6 +12,10 @@ public class UsuarioServicio {
 	
 	private List<Usuario> usuarios = new ArrayList<>();
 	
+	public UsuarioServicio(Usuario u) {
+		usuarios.add(u);
+	}
+	
 	public void agregarUsuario(Scanner sc) {
 		System.out.print("Ingrese el Id: ");
 		int id = sc.nextInt();

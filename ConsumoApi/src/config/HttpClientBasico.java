@@ -14,7 +14,7 @@ public class HttpClientBasico {
 		
 		// Crear la petición
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create("https://jsonplaceholder.typicode.com/users/1"))
+				.uri(URI.create("https://jsonplaceholder.typicode.com/users"))
 				.GET()
 				.build();
 		try {
