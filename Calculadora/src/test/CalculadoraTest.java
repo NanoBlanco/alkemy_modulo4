@@ -1,9 +1,11 @@
 package test;
 
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,5 +59,10 @@ class CalculadoraTest {
 		assertThrows(ArithmeticException.class, ()-> {
 			calc.dividir(5,0);
 		});
+	}
+	
+	@AfterEach
+	void tearDown() {
+		calc = null;
 	}
 }
