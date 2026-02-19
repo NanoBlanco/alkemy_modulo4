@@ -16,9 +16,9 @@ public class AppBilletera {
 		
 		try (Scanner sc = new Scanner(System.in)) {
 			
-			UsuarioServicio usuario = new UsuarioServicio(null);
+			//UsuarioServicio usuario = new UsuarioServicio(null);
 			LogsTransacciones logger = new LogsTransacciones("transacciones.log");
-			BilleteraServicio sistema = new BilleteraServicio(usuario, logger);
+			//BilleteraServicio sistema = new BilleteraServicio(usuario, logger);
 			
 			int opcion;
 			
@@ -30,18 +30,19 @@ public class AppBilletera {
 				System.out.println("5. Ver saldo");
 				System.out.println("6. Listar Usuarios");
 				System.out.println("0. Salir");
-				
 				opcion = sc.nextInt();
+				/*
 				switch(opcion) {
-					case 1 -> usuario.valoresUsuario(sc);
+					//case 1 -> usuario.valoresUsuario(sc);
 					case 2 -> sistema.depositar(sc);
 					case 3 -> sistema.retirar(sc);
 					case 4 -> sistema.transferir(sc);
 					case 5 -> sistema.verSaldos(sc);
-					case 6 -> {List<Usuario> usuarios = usuario.getUsuarios(); usuarios.forEach(System.out::println);}
+					//case 6 -> {List<Usuario> usuarios = usuario.getUsuarios(); usuarios.forEach(System.out::println);}
 					case 0 -> System.out.println("Saliendo...");
 					default -> System.out.println("Ingrese opción válida");
 				}
+				*/
 			} while(opcion != 0);
 		
 		}

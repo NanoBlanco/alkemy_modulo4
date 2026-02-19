@@ -1,19 +1,28 @@
 package servicios;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import excepciones.SaldoInsuficienteException;
 import modelos.Moneda;
+import modelos.UserDAO;
 import modelos.Usuario;
 
 public class UsuarioServicio {
 	
-	private List<Usuario> usuarios = new ArrayList<>();
+	//private List<Usuario> usuarios = new ArrayList<>();
+	private UserDAO dao = new UserDAO();
 	
+	/*
 	public UsuarioServicio(Usuario u) {
 		if (u!=null) usuarios.add(u);
+	}
+	*/
+	
+	public Usuario login(String user, String pass) {
+		Usuario u = dao.buscarUsuario(user);
+		if(u!=null && u.getClave().equals(pass)) return u;
+		return null;
 	}
 	
 	public void valoresUsuario(Scanner sc) {
@@ -24,9 +33,10 @@ public class UsuarioServicio {
 			int id = sc.nextInt();
 			System.out.print("Ingrese el Nombre: ");
 			String nombre = sc.next();
-			if(nombre != null && !nombre.isBlank()) {			
-				Usuario u = new Usuario(id, nombre);
-				usuarios.add(u);
+			if(nombre != null && !nombre.isBlank()) {
+				Usuario u = new Usuario();
+				//Usuario u = new Usuario(id, nombre); -- Por ahora
+				// usuarios.add(u);
 				System.out.println("Usuario Agregado.");
 			}else {
 				System.out.println("Debe ingresar un nombre");
@@ -37,7 +47,7 @@ public class UsuarioServicio {
 	}
 	
 	public void agregarUsuario(Usuario u) {
-		usuarios.add(u);
+		dao.guardar(u);
 		System.out.println("Usuario Agregado.");
 	}
 	
@@ -46,12 +56,16 @@ public class UsuarioServicio {
 	}
 	
 	public Usuario getUsuario(int id) {
+		/*
 		for(Usuario u : usuarios) {
 			if(u.getId() == id) {
 				return u;
 			}
 		}
 		return null;
+		*/
+		return dao.buscarPorId(id);
+		
 	}
 	
 	public void saldosUsuario(int id) {
@@ -84,7 +98,7 @@ public class UsuarioServicio {
 	}
 	
 	public List<Usuario> getUsuarios(){
-		return usuarios;
+		return dao.listar();
 	}
 
 }

@@ -11,5 +11,7 @@
 
 <p>Correo: ${usuario.correo}</p>
 <p>Rol: ${usuario.rol}</p>
+<% java.util.Date d = new java.util.Date(); %>
+<p><%= java.text.DateFormat.getDateInstance().format(d) %></p>
 </body>
 </html>

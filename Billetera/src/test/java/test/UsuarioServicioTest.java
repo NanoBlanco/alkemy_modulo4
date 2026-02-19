@@ -23,8 +23,8 @@ public class UsuarioServicioTest {
 	
 	@BeforeEach
 	void setUp() {
-		u = new Usuario(1, "Vale");
-		us = new UsuarioServicio(u);
+		//u = new Usuario(1, "Vale");
+		//us = new UsuarioServicio(u);
 	}
 
 	@Test
