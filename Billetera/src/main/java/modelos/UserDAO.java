@@ -9,14 +9,14 @@ public class UserDAO {
 	
 	public UserDAO() {
 		usuarios.add(new Usuario(
-				1,"admin","1234",
+				1,"admin","1234A",
 				"Administrador",
 				"admin@mail.com",
 				"ADMIN"
 				));
 		
 		usuarios.add(new Usuario(
-				2,"renny","1234",
+				2,"renny","1234A",
 				"Renny Blanco","renny@mail.com",
 				"USER"
 				));
