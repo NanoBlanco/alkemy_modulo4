@@ -9,22 +9,16 @@ public class UserDAO {
 	
 	public UserDAO() {
 		usuarios.add(new Usuario(
-				1,"admin","1234A",
+				1,"1234A",
 				"Administrador",
 				"admin@mail.com",
 				"ADMIN"
-				));
-		
-		usuarios.add(new Usuario(
-				2,"renny","1234A",
-				"Renny Blanco","renny@mail.com",
-				"USER"
-				));
+				));		
 	}
 	
 	public Usuario buscarUsuario(String username) {
 		return usuarios.stream()
-				.filter(u -> u.getUsername().equals(username))
+				.filter(u -> u.getCorreo().equals(username))
 				.findFirst()
 				.orElse(null);
 	}

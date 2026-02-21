@@ -5,6 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelos.UserDAO;
+import servicios.UsuarioServicio;
+
 import java.io.IOException;
 
 /**
@@ -13,6 +16,14 @@ import java.io.IOException;
 @WebServlet(name = "inicio", urlPatterns = { "/inicio" })
 public class InicioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Override
+	public void init() throws ServletException {
+		UserDAO dao = new UserDAO();
+		UsuarioServicio us = new UsuarioServicio(dao);
+		
+		getServletContext().setAttribute("servicio", us);
+	}
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -25,7 +36,7 @@ public class InicioServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 }

@@ -14,40 +14,37 @@ import modelos.Usuario;
 import servicios.UsuarioServicio;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class RegistrarServlet
  */
-@WebServlet(name = "login", urlPatterns = { "/login" })
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "registrar", urlPatterns = { "/registrar" })
+public class RegistrarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private UsuarioServicio us;
+private UsuarioServicio us;
     
 	@Override
 	public void init() throws ServletException {
 		us = (UsuarioServicio) getServletContext().getAttribute("servicio");
 	}
 	
-	/**
+    /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public RegistrarServlet() {
         super();
     }
-    
-    /**
+
+	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.removeAttribute("errores");
-		request.removeAttribute("error");
 		
 		HttpSession session = request.getSession(false);
 	    if (session != null) {
 	        session.removeAttribute("errores");
-	        session.removeAttribute("error");
 	    }
-	    
-		request.getRequestDispatcher("login.jsp").forward(request, response);
+		request.getRequestDispatcher("registrar.jsp").forward(request, response);
 	}
 
 	/**
@@ -55,44 +52,44 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
+			String nombre = request.getParameter("nombre").trim();
 			String user = request.getParameter("user").trim();
 			String pass = request.getParameter("pass");
 			
 			// Validación de formato (SIEMPRE en servidor)
-			List<String> errores = validarCredenciales(user, pass);
+			List<String> errores = validarCredenciales(nombre, user, pass);
 			
 			if(!errores.isEmpty()) {
 				request.setAttribute("errores", errores);
 				request.setAttribute("username", user);
-				request.getRequestDispatcher("login.jsp").forward(request, response);
+				request.getRequestDispatcher("registrar.jsp").forward(request, response);
 				return;
 			}
 			
-			// Validación de credencial contra BD
-			Usuario u = us.login(user, pass);
+			us.agregarUsuario(new Usuario(
+				1,pass,
+				nombre,
+				user,
+				"USER"
+				));
 			
-			if(u == null) {
-				String error;
-				request.setAttribute("error", "credenciales");
-				request.getRequestDispatcher("login.jsp").forward(request, response);
-				return;
-			}
-			
-			// Login exitoso
-			HttpSession sesion = request.getSession();
-			sesion.setAttribute("usuario", u);
-			response.sendRedirect("index.jsp");
-			
+			response.sendRedirect("login.jsp");
 		}catch(Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
-		
 	}
 
-	private List<String> validarCredenciales(String user, String pass) {
+	private List<String> validarCredenciales(String nombre, String user, String pass) {
 		
 		List<String> errores = new ArrayList<>();
+		
+		if(nombre.length() < 5 || nombre.length() > 50) {
+			errores.add("El nombre debe tener entre 5 y 50 caracteres");
+		}
+		
+		if(!nombre.matches("^[A-Za-zÁÉÍÓÚáéíóúÑñ]+(?: [A-Za-zÁÉÍÓÚáéíóúÑñ]+){0,9}$")) {
+			errores.add("El nombre solo puede contener letras");
+		}
 		
 		if(user.length() < 5 || user.length() > 20) {
 			errores.add("El usuario debe tener entre 5 y 20 caracteres");
@@ -111,5 +108,4 @@ public class LoginServlet extends HttpServlet {
 		}
 		return errores;
 	}
-
 }

@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:include page="header.jsp" />
 <div class="bg-light d-flex justify-content-center align-items-center"
     style="height: 90vh">
 	<div
@@ -8,28 +6,28 @@
       style="width: 350px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3)"
     >
       <h4 class="text-center mb-3">Wallet Digital</h4>
-      <c:if test="${not empty errores}">
+      <% if (request.getAttribute("errores") != null) {%>
       	<div class="alert alert-danger">
       		<ul>
-      			<c:forEach items="${errores}" var="error">
-      				<li>${error}</li>
+      			<c:forEach items="${errores}" var="err">
+      				<li>${err}</li>
       			</c:forEach>
       		</ul>
       	</div>
-      </c:if>
-      <c:if test="${error == 'Credenciales Incorrectas'}">
-      	<div class="alert alert-danger">
-      		Usuario o contraseÃ±a incorrectos
+      <% } %>
+      <% if (request.getAttribute("error") == "credenciales") {%>
+        <div class="alert alert-danger">
+      		Usuario o contraseña incorrectos
       	</div>
-      </c:if>
+      <% } %>
       <form id="loginForm" action="login" method="post">
 	      <div class="input-group m-1">
 	        <input
 	          class="form-control"
-	          type="text"
+	          type="email"
 	          id="usuario"
 	          name="user"
-	          placeholder="tu_usuario"
+	          placeholder="correo@dominio"
 	          autofocus
 	          autocomplete="off"
 	        />
@@ -46,9 +44,18 @@
 	        />
 	      </div>
 	      <div class="text-center text-danger m-2" id="errorMsgPass"></div>
-	      <button type="submit" class="btn btn-primary btn-block">
-	        Ingresar
-	      </button>
+	      <div class="d-flex justify-content-between">
+	      <div>
+		      <button type="submit" class="btn btn-primary btn-block">
+		        Ingresar
+		      </button>
+	      </div>
+	      <div>
+	      	<a href="/Billetera/registrar" style="text-decoration: none">Registrarse</a>
+	      </div>
+	      </div>
       </form>
     </div>
 </div>
+<script type="text/javascript" src="assests/login.js"></script>
+<jsp:include page="footer.jsp" />

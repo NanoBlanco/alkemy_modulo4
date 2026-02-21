@@ -1,13 +1,14 @@
 package controlador;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import modelos.UserDAO;
 import servicios.UsuarioServicio;
-
-import java.io.IOException;
 
 /**
  * Servlet implementation class UsuariosServlet
@@ -16,7 +17,13 @@ import java.io.IOException;
 public class UsuariosServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	private UsuarioServicio us = new UsuarioServicio();
+	private UsuarioServicio us;
+    
+	@Override
+	public void init() throws ServletException {
+		us = (UsuarioServicio) getServletContext().getAttribute("servicio");
+	}
+	
     /**
      * @see HttpServlet#HttpServlet()
      */

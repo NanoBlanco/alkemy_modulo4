@@ -10,18 +10,18 @@ import modelos.Usuario;
 
 public class UsuarioServicio {
 	
-	//private List<Usuario> usuarios = new ArrayList<>();
 	private UserDAO dao = new UserDAO();
 	
-	/*
-	public UsuarioServicio(Usuario u) {
-		if (u!=null) usuarios.add(u);
-	}
-	*/
+	public UsuarioServicio(UserDAO dao) {this.dao = dao;}
 	
 	public Usuario login(String user, String pass) {
 		Usuario u = dao.buscarUsuario(user);
-		if(u!=null && u.getClave().equals(pass)) return u;
+		if(u !=null && u.getClave().equals(pass)) {
+			System.out.println("Usuario Encontrado");
+			return u;
+		}else {
+			System.out.println("Usuario no encontrado");
+		}
 		return null;
 	}
 	

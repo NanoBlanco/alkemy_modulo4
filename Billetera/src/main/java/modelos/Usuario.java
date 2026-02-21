@@ -3,7 +3,6 @@ package modelos;
 public class Usuario {
 	
 	private int id;
-	private String username;
 	private String clave;
 	private String nombre;
 	private String correo;
@@ -12,9 +11,8 @@ public class Usuario {
 	
 	public Usuario() { }
 	
-	public Usuario(int id, String username, String clave, String nombre, String correo, String rol) {
+	public Usuario(int id, String clave, String nombre, String correo, String rol) {
 		this.id = id;
-		this.username = username;
 		this.clave = clave;
 		this.nombre = nombre;
 		this.correo = correo;
@@ -23,8 +21,6 @@ public class Usuario {
 	}
 
 	public int getId() { return id;	}
-
-	public String getUsername() { return username; }
 
 	public String getClave() { return clave; }
 
@@ -37,8 +33,6 @@ public class Usuario {
 	public Billetera getBilletera() { return billetera; }
 
 	public void setId(int id) { this.id = id; }
-
-	public void setUsername(String username) { this.username = username; }
 
 	public void setClave(String clave) { this.clave = clave; }
 
