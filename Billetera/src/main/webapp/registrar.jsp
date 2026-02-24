@@ -1,11 +1,22 @@
-<jsp:include page="header.jsp" />
-    <div class="bg-light d-flex justify-content-center align-items-center"
+<%@ include file="header.jsp" %>
+<c:set var="modo" value="${modo}" />
+<c:set var="u" value="${usuarioEditar}" />
+<div class="bg-light d-flex justify-content-center align-items-center"
     style="height: 90vh">
 	<div
       class="card p-4"
       style="width: 50rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3)"
     >
-      <h4 class="text-center mb-3">Registrar Usuario</h4>
+      <h4 class="text-center mb-3">
+      	<c:choose>
+	        <c:when test="${modo == 'editar'}">
+	            Editar Usuario
+	        </c:when>
+	        <c:otherwise>
+	            Registrar Usuario
+	        </c:otherwise>
+    	</c:choose>
+      </h4>
       <% if(request.getAttribute("errores") != null) { %>
       	<div class="alert alert-danger">
       		<ul>
@@ -15,12 +26,11 @@
       		</ul>
       	</div>
       <% } %>
-      <% if(request.getAttribute("exito") == "exito") {%>
-      	<div class="alert alert-success">
-      		Usuario Registrado!
-      	</div>
-      <%} %>
-      <form id="registrarForm" action="registrar" method="post">
+     
+      <form id="registrarForm" action="${modo == 'editar' ? 'actualizar' : 'registrar'}" method="post">
+      	  <c:if test="${modo == 'editar'}">
+    		<input type="hidden" name="id" value="${u.id}" />
+		  </c:if>
 	      <div class="col-12 m-1">
 	      <label class="form-label" for="nombre">Nombre: </label>
 	        <input
@@ -30,6 +40,7 @@
 	          name="nombre"
 	          placeholder="tu nombre"
 	          autofocus
+	          value="${u != null ? u.nombre : ''}"
 	          autocomplete="off"
 	        />
 	      </div>
@@ -43,7 +54,7 @@
 	          id="usuario"
 	          name="user"
 	          placeholder="tu usuario"
-	          autofocus
+	          value="${u != null ? u.correo : ''}"
 	          autocomplete="off"
 	        />
 	      </div>
@@ -55,16 +66,23 @@
 	          type="password"
 	          id="password"
 	          name="pass"
-	          placeholder="Clave de acceso"
+	          placeholder="${modo == 'editar' ? 'Nueva clave (opcional)' : 'Clave de acceso'}"
 	          autocomplete="off"
 	        />
 	      </div>
 	      <div class="text-center text-danger m-2" id="errorMsgPass"></div>
 	      <button type="submit" class="btn btn-primary btn-block mt-2">
-	        Registrar
-	      </button>
+    		<c:choose>
+        		<c:when test="${modo == 'editar'}">
+            		Actualizar
+        		</c:when>
+        		<c:otherwise>
+            		Registrar
+        		</c:otherwise>
+    		</c:choose>
+		  </button>
       </form>
     </div>
 </div>
 <script type="text/javascript" src="assests/registrar.js"></script>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

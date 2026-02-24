@@ -22,16 +22,16 @@ public class LoginServlet extends HttpServlet {
     
 	private UsuarioServicio us;
     
-	@Override
-	public void init() throws ServletException {
-		us = (UsuarioServicio) getServletContext().getAttribute("servicio");
-	}
-	
 	/**
      * @see HttpServlet#HttpServlet()
      */
     public LoginServlet() {
         super();
+    }
+    
+    @Override
+    public void init() throws ServletException {
+    	us = (UsuarioServicio) getServletContext().getAttribute("servicio");
     }
     
     /**
@@ -46,7 +46,6 @@ public class LoginServlet extends HttpServlet {
 	        session.removeAttribute("errores");
 	        session.removeAttribute("error");
 	    }
-	    
 		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
@@ -55,7 +54,7 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
+			System.out.println("Llega al post");
 			String user = request.getParameter("user").trim();
 			String pass = request.getParameter("pass");
 			
@@ -82,8 +81,8 @@ public class LoginServlet extends HttpServlet {
 			// Login exitoso
 			HttpSession sesion = request.getSession();
 			sesion.setAttribute("usuario", u);
+			sesion.setMaxInactiveInterval(30 * 60);
 			response.sendRedirect("index.jsp");
-			
 		}catch(Exception e) {
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}

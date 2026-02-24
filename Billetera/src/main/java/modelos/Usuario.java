@@ -1,50 +1,43 @@
 package modelos;
 
-public class Usuario {
+import java.util.List;
+
+public class Usuario extends Persona{
 	
-	private int id;
 	private String clave;
-	private String nombre;
-	private String correo;
 	private String rol;
 	private Billetera billetera;
+	private List<Contacto> contactos;
 	
-	public Usuario() { }
-	
-	public Usuario(int id, String clave, String nombre, String correo, String rol) {
-		this.id = id;
+	public Usuario(int id, String nombre, String correo, String clave, String rol) {
+		super(id, nombre, correo);
 		this.clave = clave;
-		this.nombre = nombre;
-		this.correo = correo;
 		this.rol = rol;
 		this.billetera = new Billetera();
 	}
 
-	public int getId() { return id;	}
-
 	public String getClave() { return clave; }
-
-	public String getNombre() { return nombre; }
-
-	public String getCorreo() { return correo; }
 
 	public String getRol() { return rol; }
 	
 	public Billetera getBilletera() { return billetera; }
 
-	public void setId(int id) { this.id = id; }
+	public List<Contacto> getContactos() { return contactos; }
 
 	public void setClave(String clave) { this.clave = clave; }
-
-	public void setNombre(String nombre) { this.nombre = nombre; }
-
-	public void setCorreo(String correo) { this.correo = correo; }
 
 	public void setRol(String rol) { this.rol = rol; }
 
 	public void setBilletera(Billetera billetera) { this.billetera = billetera; }
+	
+	public void setContacto(Contacto c) { contactos.add(c); }
+	
+
 
 	@Override
-	public String toString() { return id + " - " + nombre; }
+	public void mostrarInfo() {
+		System.out.println("\nId: "+id + " - " + nombre);
+		
+	}
 	
 }

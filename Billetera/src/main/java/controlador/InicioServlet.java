@@ -5,10 +5,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import modelos.UserDAO;
 import servicios.UsuarioServicio;
 
 import java.io.IOException;
+
+import dao.UserDAO;
 
 /**
  * Servlet implementation class InicioServlet
@@ -17,13 +18,6 @@ import java.io.IOException;
 public class InicioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	@Override
-	public void init() throws ServletException {
-		UserDAO dao = new UserDAO();
-		UsuarioServicio us = new UsuarioServicio(dao);
-		
-		getServletContext().setAttribute("servicio", us);
-	}
        
     /**
      * @see HttpServlet#HttpServlet()

@@ -3,14 +3,14 @@ package servicios;
 import java.util.List;
 import java.util.Scanner;
 
+import dao.UserDAO;
 import excepciones.SaldoInsuficienteException;
 import modelos.Moneda;
-import modelos.UserDAO;
 import modelos.Usuario;
 
 public class UsuarioServicio {
 	
-	private UserDAO dao = new UserDAO();
+	private final UserDAO dao;
 	
 	public UsuarioServicio(UserDAO dao) {this.dao = dao;}
 	
@@ -25,27 +25,6 @@ public class UsuarioServicio {
 		return null;
 	}
 	
-	public void valoresUsuario(Scanner sc) {
-		System.out.print("Ingresa tu edad: ");
-		int edad = sc.nextInt();
-		if(esMayor(edad)) {
-			System.out.print("Ingrese el Id: ");
-			int id = sc.nextInt();
-			System.out.print("Ingrese el Nombre: ");
-			String nombre = sc.next();
-			if(nombre != null && !nombre.isBlank()) {
-				Usuario u = new Usuario();
-				//Usuario u = new Usuario(id, nombre); -- Por ahora
-				// usuarios.add(u);
-				System.out.println("Usuario Agregado.");
-			}else {
-				System.out.println("Debe ingresar un nombre");
-			}
-		}else {
-			System.out.println("Debe ser mayor de edad para abrir la cuenta");
-		}
-	}
-	
 	public void agregarUsuario(Usuario u) {
 		dao.guardar(u);
 		System.out.println("Usuario Agregado.");
@@ -56,16 +35,19 @@ public class UsuarioServicio {
 	}
 	
 	public Usuario getUsuario(int id) {
-		/*
-		for(Usuario u : usuarios) {
-			if(u.getId() == id) {
-				return u;
-			}
-		}
-		return null;
-		*/
 		return dao.buscarPorId(id);
-		
+	}
+	
+	public List<Usuario> getUsuarios(){
+		return dao.listar();
+	}
+	
+	public void actualizar(Usuario u) {
+		dao.actualizar(u);
+	}
+	
+	public void eliminar(int id) {
+		dao.eliminar(id);
 	}
 	
 	public void saldosUsuario(int id) {
@@ -95,10 +77,6 @@ public class UsuarioServicio {
 		}else {
 			System.out.println("El Id no existe");
 		}
-	}
-	
-	public List<Usuario> getUsuarios(){
-		return dao.listar();
 	}
 
 }

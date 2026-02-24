@@ -20,7 +20,7 @@ import servicios.UsuarioServicio;
 public class RegistrarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-private UsuarioServicio us;
+	private UsuarioServicio us;
     
 	@Override
 	public void init() throws ServletException {
@@ -44,6 +44,7 @@ private UsuarioServicio us;
 	    if (session != null) {
 	        session.removeAttribute("errores");
 	    }
+	    request.setAttribute("modo", "crear");
 		request.getRequestDispatcher("registrar.jsp").forward(request, response);
 	}
 

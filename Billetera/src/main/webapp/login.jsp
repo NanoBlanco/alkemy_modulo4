@@ -1,4 +1,4 @@
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 <div class="bg-light d-flex justify-content-center align-items-center"
     style="height: 90vh">
 	<div
@@ -58,4 +58,4 @@
     </div>
 </div>
 <script type="text/javascript" src="assests/login.js"></script>
-<jsp:include page="footer.jsp" />
+<%@ include file="footer.jsp" %>

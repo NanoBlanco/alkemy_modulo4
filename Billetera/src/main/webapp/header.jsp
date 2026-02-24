@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +16,7 @@
     />
     <!--  BootStrap  -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+	<link rel="stylesheet" href="assests/estilo.css" />
 	<title>e-Wallet</title>
 </head>
 <body class="bg-light" >
@@ -43,11 +44,27 @@
 			          <a class="nav-link" href="/Billetera/usuarios">Usuarios</a>
 			        </li>
 	        	</c:if>
-		        <li class="nav-item">
-		          <a class="nav-link" href="#">Transacciones</a>
-		        </li>
-		        <li class="nav-item">
-		          <a class="nav-link" href="/Billetera/logout">Logout</a>
+	        	<c:if test="${not empty sessionScope.usuario and sessionScope.usuario.rol == 'USER'}">
+			        <li class="nav-item dropdown">
+			          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Transacciones</a>
+			          <ul class="dropdown-menu">
+	            			<li><a class="dropdown-item" href="#">Depositos</a></li>
+	            			<li><a class="dropdown-item" href="#">Retiros</a></li>
+	            			<li><a class="dropdown-item" href="#">Transferencias</a></li>
+			          		<li><hr class="dropdown-divider"></li>
+			          		<li><a class="dropdown-item" href="/Billetera/contactos">Contactos</a></li>
+	            		</ul>
+			        </li>
+		        </c:if>
+		        <li class="nav-item dropdown">
+		        	<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            			<c:out value="${sessionScope.usuario.nombre}" />
+          			</a>
+          			<ul class="dropdown-menu">
+            			<li><a class="dropdown-item" href="/Billetera/editarPerfil">Perfil</a></li>
+		          		<li><hr class="dropdown-divider"></li>
+		          		<li><a class="dropdown-item" href="/Billetera/logout">Cerrar sesión</a></li>
+            		</ul>
 		        </li>
         	</c:otherwise>
         </c:choose>
