@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.UserDAO;
+
 /**
  * Servlet implementation class EditarUsuarioServlet
  */
@@ -21,20 +23,15 @@ import java.util.List;
 public class EditarUsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private UsuarioServicio us;
+	private final UserDAO dao = new UserDAO();
+	private final UsuarioServicio us = new UsuarioServicio(dao);
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public EditarUsuarioServlet() {
         super();
     }
-
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init() throws ServletException {
-		us = (UsuarioServicio) getServletContext().getAttribute("servicio");
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -81,10 +78,7 @@ public class EditarUsuarioServlet extends HttpServlet {
 			}
 						
 			us.actualizar(new Usuario(
-				id,pass,
-				nombre,
-				user,
-				rol
+				id,nombre,user,pass,rol
 				));
 			
 			response.sendRedirect("/Billetera/usuarios");

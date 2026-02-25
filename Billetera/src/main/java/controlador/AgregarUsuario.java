@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.UserDAO;
+
 /**
  * Servlet implementation class AgregarUsuario
  */
@@ -21,7 +23,8 @@ import java.util.List;
 public class AgregarUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private UsuarioServicio us;
+	private final UserDAO dao = new UserDAO();
+	private final UsuarioServicio us = new UsuarioServicio(dao);
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,13 +33,7 @@ public class AgregarUsuario extends HttpServlet {
         super();
     }
 
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init() throws ServletException {
-		us = (UsuarioServicio) getServletContext().getAttribute("servicio");
-	}
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -67,16 +64,16 @@ public class AgregarUsuario extends HttpServlet {
 			if(!errores.isEmpty()) {
 				request.setAttribute("errores", errores);
 				request.setAttribute("username", user);
-				request.getRequestDispatcher("registrar.jsp").forward(request, response);
+				request.getRequestDispatcher("agregarUsuario.jsp").forward(request, response);
 				return;
 			}
 			
 			if (rol.isEmpty()) rol = "USER";
 			
 			us.agregarUsuario(new Usuario(
-				1,pass,
-				nombre,
+				1,nombre,
 				user,
+				pass,
 				rol
 				));
 			

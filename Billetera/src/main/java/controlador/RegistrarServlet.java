@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,12 +21,8 @@ import servicios.UsuarioServicio;
 public class RegistrarServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private UsuarioServicio us;
-    
-	@Override
-	public void init() throws ServletException {
-		us = (UsuarioServicio) getServletContext().getAttribute("servicio");
-	}
+	private final UserDAO dao = new UserDAO();
+	private final UsuarioServicio us = new UsuarioServicio(dao);
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -68,9 +65,9 @@ public class RegistrarServlet extends HttpServlet {
 			}
 			
 			us.agregarUsuario(new Usuario(
-				1,pass,
-				nombre,
+				1,nombre,
 				user,
+				pass,
 				"USER"
 				));
 			

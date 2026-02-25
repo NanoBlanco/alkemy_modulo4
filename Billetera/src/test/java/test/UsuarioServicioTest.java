@@ -55,15 +55,4 @@ public class UsuarioServicioTest {
 		});
 	}
 	
-	@Test
-	@DisplayName("Revisa método esMayor, si es Mayor")
-	void testEsMayor() {
-		assertTrue(us.esMayor(18));
-	}
-	
-	@Test
-	@DisplayName("Revisa método esMayor, si es menor")
-	void testEsMenor() {
-		assertFalse(us.esMayor(17));
-	}
 }

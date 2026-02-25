@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.UserDAO;
 import jakarta.servlet.Servlet;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
@@ -22,7 +23,8 @@ import servicios.UsuarioServicio;
 public class EditarPerfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private UsuarioServicio us;
+	private final UserDAO dao = new UserDAO();
+	private final UsuarioServicio us = new UsuarioServicio(dao);
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,13 +32,6 @@ public class EditarPerfilServlet extends HttpServlet {
     public EditarPerfilServlet() {
         super();
     }
-
-	/**
-	 * @see Servlet#init(ServletConfig)
-	 */
-	public void init() throws ServletException {
-		us = (UsuarioServicio) getServletContext().getAttribute("servicio");
-	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -62,8 +57,36 @@ public class EditarPerfilServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			int id = Integer.parseInt(request.getParameter("id"));
+			String nombre = request.getParameter("nombre").trim();
+			String user = request.getParameter("user").trim();
+			String pass = request.getParameter("pass");
+			String rol = request.getParameter("rol");
+			
+			if(pass.isEmpty()) pass="1234A";
+			if (rol.isEmpty()) rol = "USER";
+				
+			// Validación de formato (SIEMPRE en servidor)
+			List<String> errores = validarCredenciales(nombre, user, pass);
+			
+			if(!errores.isEmpty()) {
+				request.setAttribute("errores", errores);
+				request.setAttribute("username", user);
+				request.getRequestDispatcher("registrar.jsp").forward(request, response);
+				return;
+			}
+			us.actualizar(new Usuario(
+				id,nombre,
+				user,
+				pass,
+				rol
+				));
+			
+			response.sendRedirect("index.jsp");
+		}catch(Exception e) {
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 private List<String> validarCredenciales(String nombre, String user, String pass) {

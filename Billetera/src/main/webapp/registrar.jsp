@@ -27,9 +27,10 @@
       	</div>
       <% } %>
      
-      <form id="registrarForm" action="${modo == 'editar' ? 'actualizar' : 'registrar'}" method="post">
+      <form id="registrarForm" action="${modo == 'editar' ? 'editarPerfil' : 'registrar'}" method="post">
       	  <c:if test="${modo == 'editar'}">
     		<input type="hidden" name="id" value="${u.id}" />
+    		<input type="hidden" name="rol" value ="${u.rol }" />
 		  </c:if>
 	      <div class="col-12 m-1">
 	      <label class="form-label" for="nombre">Nombre: </label>
@@ -67,6 +68,7 @@
 	          id="password"
 	          name="pass"
 	          placeholder="${modo == 'editar' ? 'Nueva clave (opcional)' : 'Clave de acceso'}"
+	          value="${u != null ? u.clave : ''}"
 	          autocomplete="off"
 	        />
 	      </div>

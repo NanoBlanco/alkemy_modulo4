@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -20,18 +21,14 @@ import servicios.UsuarioServicio;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private UsuarioServicio us;
+	private final UserDAO dao = new UserDAO();
+	private final UsuarioServicio us = new UsuarioServicio(dao);
     
 	/**
      * @see HttpServlet#HttpServlet()
      */
     public LoginServlet() {
         super();
-    }
-    
-    @Override
-    public void init() throws ServletException {
-    	us = (UsuarioServicio) getServletContext().getAttribute("servicio");
     }
     
     /**

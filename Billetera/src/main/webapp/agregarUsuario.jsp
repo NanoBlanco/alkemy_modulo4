@@ -46,7 +46,7 @@
 	      <div class="text-danger m-2" id="errorMsgNom"></div>
 
 	      <div class="col-12 m-1">
-	      	<label class="form-label" for="usuario">Usuario: </label>
+	      	<label class="form-label" for="usuario">Correo: </label>
 	        <input
 	          class="form-control"
 	          type="email"

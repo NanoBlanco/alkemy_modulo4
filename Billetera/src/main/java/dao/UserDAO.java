@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import config.DBConnection;
@@ -14,79 +14,109 @@ import modelos.Usuario;
 
 public class UserDAO implements IUserDAO {
 	
-	// De esta manera permite concurrencia web, multiples requests, es thread-safe.
-	private final List<Usuario> usuarios = Collections.synchronizedList(new ArrayList<>());
+	private final Connection cnx;
 	
 	public UserDAO() {
-		usuarios.add(new Usuario(
-				1,"1234A",
-				"Administrador",
-				"admin@mail.com",
-				"ADMIN"
-				));		
-	}
-	
-	public Usuario buscarUsuario(String username) {
-		return usuarios.stream()
-				.filter(u -> u.getCorreo().equals(username))
-				.findFirst()
-				.orElse(null);
-	}
-	
-	public Usuario buscarPorId(Integer id) {
-		return usuarios.stream()
-				.filter(u -> u.getId() == id)
-				.findFirst().orElse(null);
-	}
-	
-	public List<Usuario> listar(){
-		List<Usuario> users = new ArrayList<>();
-		String consulta = "SELECT u.id_usuario, u.nombre, u.clave, u.correo FROM usuarios u";
-		Connection conn = null;
-		PreparedStatement stmt = null;
-		Usuario user = null;
-		try {
-			conn = DBConnection.getConnection();
-			if(conn == null) {
-        		throw new SQLException("Problemas con conexión a la base de datos Usuarios");
-        	}
-			stmt = conn.prepareStatement(consulta);
-			ResultSet rs = stmt.executeQuery();
-			while(rs.next()) {
-				user = new Usuario(rs.getInt("id_usuario"),rs.getString("nombre"),rs.getString("correo"),rs.getString("clave"),"USER");
-				users.add(user);
-			}
-			System.out.println("Lista Usuarios");
-			rs.close();
-			stmt.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return users;
+		this.cnx = DBConnection.getConnection();
 	}
 
-	public void guardar(Usuario u) {
-		int id = usuarios.stream()
-				.mapToInt(Usuario::getId)
-				.max().orElse(0)+1;
+	@Override
+	public void guardar(Usuario entidad) {
+		try (PreparedStatement ps = cnx.prepareStatement("INSERT INTO usuarios (nombre, correo, clave, rol) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+			ps.setString(1, entidad.getNombre());
+			ps.setString(2, entidad.getCorreo());
+			ps.setString(3, entidad.getClave());
+			ps.setString(4, entidad.getRol());
+			ps.executeUpdate() ;
+			System.out.println("Valores recibidos ");
+			try (ResultSet keys = ps.getGeneratedKeys()){
+				if(keys.next()) {
+					entidad.setId(keys.getInt(1));
+				}
+			}
+		}catch(SQLException e) {
+			System.out.println("Error: "+e.getMessage());
+		}
 		
-		u.setId(id);
-		usuarios.add(u);
 	}
 	
+	@Override
+	public Usuario buscarPorId(Integer id) {
+		try (PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios WHERE id = ?")) {
+			ps.setInt(1, id);
+			try (ResultSet rs = ps.executeQuery()){
+				if(rs.next()) {
+					return mapear(rs);
+				}
+			}
+		}catch(SQLException e) {
+			System.out.println("Error: "+e.getMessage());
+		}
+		return null;
+	}
+
+	@Override
+	public List<Usuario> listar() {
+		List<Usuario> lista = new ArrayList<>();
+		try (PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios");
+				ResultSet rs = ps.executeQuery()) {
+			while(rs.next()) {
+				lista.add(mapear(rs));
+			}
+		}catch(SQLException e) {
+			System.out.println("Error: "+e.getMessage());
+		}
+		return lista;
+	}
+
+	@Override
+	public void actualizar(Usuario entidad) {
+		try (PreparedStatement ps = cnx.prepareStatement("UPDATE usuarios SET nombre = ?, correo = ?, rol = ? WHERE id = ?")) {
+			ps.setString(1, entidad.getNombre());
+			ps.setString(2, entidad.getCorreo());
+			ps.setString(3, entidad.getRol());
+			ps.setInt(4, entidad.getId());
+			ps.executeUpdate();
+			
+		}catch(SQLException e) {
+			System.out.println("Error: "+e.getMessage());
+		}
+		
+	}
+
 	@Override
 	public void eliminar(Integer id) {
-		int idx = usuarios.indexOf(id);
-		usuarios.remove(idx);
+		try (PreparedStatement ps = cnx.prepareStatement("DELETE FROM usuarios WHERE id = ?")) {
+			ps.setInt(1, id);
+			ps.executeUpdate();
+		}catch(SQLException e) {
+			System.out.println("Error: "+e.getMessage());
+		}		
 	}
 
 	@Override
-	public void actualizar(Usuario u) {
-		Usuario actual = buscarPorId(u.getId());
-		if(actual != null) {
-			actual.setNombre(u.getNombre());
-			actual.setCorreo(u.getCorreo());
-			actual.setCorreo(u.getRol());
+	public Usuario buscarUsuario(String correo) {
+		try (PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios WHERE correo = ?")) {
+			ps.setString(1, correo);
+			try (ResultSet rs = ps.executeQuery()){
+				if(rs.next()) {
+					return mapear(rs);
+				}
+			}
+		}catch(SQLException e) {
+			System.out.println("Error: "+e.getMessage());
 		}
+		return null;
 	}
+	
+	private Usuario mapear(ResultSet rs) throws SQLException {
+		return new Usuario(
+					rs.getInt("id"),
+					rs.getString("nombre"),
+					rs.getString("correo"),
+					rs.getString("clave"),
+					rs.getString("rol")
+				);
+	}
+	
 }

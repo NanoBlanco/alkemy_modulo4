@@ -1,5 +1,7 @@
 package modelos;
 
+import java.util.Objects;
+
 public abstract class Persona {
 
 	protected int id;

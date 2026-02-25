@@ -11,20 +11,20 @@ public class DBConnection {
 	private DBConnection() {
     	try {
     		
-    		// Cargamos el driver
-    		Class.forName("com.mysql.jdbc.Driver");
+    		//1. Cargamos el driver
+    		Class.forName("com.mysql.cj.jdbc.Driver");
     		
-    		//Creamos la conexion
-    		cnx = DriverManager.getConnection("jdbc:mysql://localhost:3306/e-wallet","root","");
+    		//2. Creamos la conexion
+    		cnx = DriverManager.getConnection("jdbc:mysql://localhost:3306/e_wallet","root","");
     		
-			//Verificamos
+			//3. Verificamos
 			if(cnx != null) {
 				System.out.println("Conexion establecida");
 			}else {
 				System.out.println("Fallo la conexion");
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} catch(ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}

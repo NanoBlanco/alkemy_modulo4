@@ -1,5 +1,5 @@
 package modelos;
 
 public enum Moneda {
-	CLP, USD, EUR, R
+	CLP, USD, EUR
 }

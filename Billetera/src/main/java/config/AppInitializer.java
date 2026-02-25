@@ -10,7 +10,7 @@ import servicios.UsuarioServicio;
 /**
  * Servlet implementation class AppInitializer
  */
-@WebListener
+//@WebListener
 public class AppInitializer implements ServletContextListener {
 	
 	@Override

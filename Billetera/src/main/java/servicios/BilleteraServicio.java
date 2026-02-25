@@ -8,12 +8,11 @@ import modelos.Usuario;
 
 public class BilleteraServicio {
 	
-	UsuarioServicio usuario;
-	LogsTransacciones logger;
+	private UsuarioServicio usuario;
+	private LogsTransacciones logger;
 	
-	public BilleteraServicio(UsuarioServicio usuario, LogsTransacciones logger) {
-		this.usuario = usuario;
-		this.logger = logger;
+	public BilleteraServicio() {
+		
 	}
 	
 	private int leerId(Scanner sc) {		

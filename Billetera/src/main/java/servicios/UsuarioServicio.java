@@ -30,10 +30,6 @@ public class UsuarioServicio {
 		System.out.println("Usuario Agregado.");
 	}
 	
-	public boolean esMayor(int edad) {
-		return edad >= 18;
-	}
-	
 	public Usuario getUsuario(int id) {
 		return dao.buscarPorId(id);
 	}
