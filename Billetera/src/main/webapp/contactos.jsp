@@ -1,42 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <link rel="stylesheet" href="./assest/css/gestion.css" />
-    <title>Gestión de Usuarios</title>
-  </head>
-  <body>
-    <div class="container">
-      <h2>Panel de Administración de Usuarios</h2>
+<%@ include file="header.jsp" %>
+    <div class="contenedor">
+      <h2>Panel de Administraci�n de Contactos</h2>
+      <form action="contacto" method="post">
       <div class="form-section">
         <div class="form-group">
-          <label for="nombre">Nombre</label>
+          <label class="etiqueta" for="nombre">Nombre</label>
           <input
+          	class="entrada"
             type="text"
             name="nombre"
             id="nombre"
-            placeholder="Ej. Juan Pérez"
+            placeholder="Ej. Juan Perez"
           />
         </div>
         <div class="form-group">
-          <label for="edad">Edad</label>
-          <input type="number" name="edad" id="edad" placeholder="Ej: 25" />
+          <label class="etiqueta" for="correo">Correo</label>
+          <input class="entrada" type="email" name="correo" id="correo" placeholder="Ej: correo@dominio.cl" />
         </div>
-        <button type="button" id="btnAgregar">Registrar</button>
+        <button type="submit" id="btnAgregar">Registrar</button>
       </div>
+      </form>
       <table>
         <thead>
           <tr>
             <th>Nombre</th>
-            <th>Edad</th>
+            <th>Correo</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody id="tablaUsuarios"></tbody>
       </table>
     </div>
-    <script src="./assest/js/gestion.js"></script>
-  </body>
-</html>
+<%@ include file="footer.jsp" %>
