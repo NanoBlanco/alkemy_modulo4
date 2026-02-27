@@ -17,7 +17,7 @@
 		    <h3>Lista de Contactos</h3>
 		  </div>
 		  <div>
-		  	<button class="btn btn-sm btn-primary"><a class="text-white" href="contacto?accion=nuevo" style="text-decoration: none;">Nuevo Contacto</a></button>
+		  	<a class="btn btn-sm btn-primary" href="app?action=nuevo" style="text-decoration: none;">Nuevo Contacto</a>
 		  </div>
 	  </div>
 	  <div class="card-body">
@@ -28,6 +28,7 @@
 	      			<th scope="col">Nombre</th>
 	      			<th scope="col">Correo</th>
 	      			<th scope="col">Telefono</th>
+	      			<th scope="col">Acciones</th>
 	    		</tr>
 	  		</thead>
 	  		<tbody>
@@ -37,6 +38,16 @@
 		      			<td>${c.nombre}</td>
 		      			<td>${c.correo}</td>
 		      			<td>${c.telefono}</td>
+		      			<td>
+		      				<a class="btn btn-sm btn-primary" href="app?action=editar&id=${c.id}">
+		      					Editar
+		      				</a>
+		      			
+		      				<a class="btn btn-sm btn-warning" href="app?action=eliminar&id=${c.id}"
+		      					onclick="return confirm('¿Eliminar ${c.nombre}?')">
+		      					Eliminar
+		      				</a>
+		      			</td>
 		    		</tr>
 	  			</c:forEach>
 	    	</tbody>

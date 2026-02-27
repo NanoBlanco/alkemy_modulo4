@@ -11,7 +11,7 @@
 </head>
 <body>
 <c:set var="modo" value="${modo}" />
-<c:set var="u" value="${usuarioEditar}" />
+<c:set var="c" value="${contacto}" />
     <div class="bg-light d-flex justify-content-center align-items-center"
     style="height: 90vh">
 	<div
@@ -28,9 +28,9 @@
     	</c:choose>
       </h4>
       
-      <form id="registrarForm" action="${modo == 'editar' ? 'editarUsuario' : 'contacto'}" method="post">
+      <form id="registrarForm" action="${modo == 'editar' ? 'app?action=actualizar' : 'app?action=guardar'}" method="post">
       	  <c:if test="${modo == 'editar'}">
-    		<input type="hidden" name="id" value="${u.id}" />
+    		<input type="hidden" name="id" value="${c.id}" />
 		  </c:if>
 	      <div class="col-12 m-1">
 		      <label class="form-label" for="nombre">Nombre: </label>
@@ -40,7 +40,7 @@
 		          name="nombre"
 		          placeholder="tu nombre"
 		          autofocus
-		          value="${u != null ? u.nombre : ''}"
+		          value="${c != null ? c.nombre : ''}"
 		          autocomplete="off"
 		        />
 		  </div>
@@ -52,7 +52,7 @@
 	          type="email"
 	          name="correo"
 	          placeholder="Ej. correo@dominio.cl"
-	          value="${u != null ? u.correo : ''}"
+	          value="${c != null ? c.correo : ''}"
 	          autocomplete="off"
 	        />
 	      </div>
@@ -64,7 +64,7 @@
 	          type="text"
 	          name="telefono"
 	          placeholder="Ej X-XXXX XXXX";
-	          value="${u != null ? u.telefono : ''}"
+	          value="${c != null ? c.telefono : ''}"
 	          autocomplete="off"
 	        />
 	      </div>

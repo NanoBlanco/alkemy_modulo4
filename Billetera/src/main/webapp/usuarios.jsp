@@ -8,7 +8,7 @@
 	    Usuarios
 	  </div>
 	  <div>
-	  	<button class="btn btn-sm btn-primary"><a class="text-white" href="/Billetera/agregar" style="text-decoration: none;">Nuevo Usuario</a></button>
+	  	<a class="btn btn-sm btn-primary" href="/Billetera/agregar" style="text-decoration: none;">Nuevo Usuario</a>
 	  </div>
 	  </div>
 	  <div class="card-body">
@@ -30,8 +30,8 @@
 			      <td>${usuario.correo}</td>
 			      <td>${usuario.rol}</td>
 			      <td>
-			      	<button type="button" class="btn btn-sm btn-primary"><a class="text-white" href="/Billetera/editarUsuario?id=${usuario.id}" style="text-decoration: none;">Editar</a></button>
-			      	<button type="button" class="btn btn-sm btn-warning"><a class="text-blue" href="#" style="text-decoration: none;">Eliminar</a></button>
+			      	<a class="btn btn-sm btn-primary" href="/Billetera/editarUsuario?id=${usuario.id}" style="text-decoration: none;">Editar</a>
+			      	<a class="btn btn-sm btn-warning" href="#" style="text-decoration: none;">Eliminar</a>
 			      </td>
 			    </tr>
 		    </c:forEach>

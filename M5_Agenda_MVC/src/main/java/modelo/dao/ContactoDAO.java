@@ -1,6 +1,8 @@
-package modelo;
+package modelo.dao;
 
 import java.util.List;
+
+import modelo.ContactoDTO;
 
 public interface ContactoDAO {
 	List<ContactoDTO> listar();

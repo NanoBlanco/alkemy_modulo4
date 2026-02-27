@@ -9,12 +9,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import modelo.ContactoDTO;
-import modelo.ContactoService;
+import modelo.service.ContactoService;
 
 /**
  * Servlet implementation class ContactoServlet
  */
-@WebServlet(name = "contacto", urlPatterns = { "/contacto" })
+//@WebServlet(name = "contacto", urlPatterns = { "/contacto" })
 public class ContactoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	

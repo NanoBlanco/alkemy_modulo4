@@ -9,6 +9,6 @@
 <body>
 	<h2>Contactos</h2>
 	<br>
-	<a href="contacto">Contactos</a>
+	<a href="app">Contactos</a>
 </body>
 </html>
