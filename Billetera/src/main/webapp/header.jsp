@@ -35,13 +35,13 @@
         <c:choose>
         	<c:when test="${empty sessionScope.usuario}">
 		        <li class="nav-item">
-		          <a class="nav-link" href="/Billetera/login">Login</a>
+		          <a class="nav-link" href="/Billetera/app?action=login">Login</a>
 		        </li>
         	</c:when>
         	<c:otherwise>
 	        	<c:if test="${not empty sessionScope.usuario and sessionScope.usuario.rol == 'ADMIN'}">
 			        <li class="nav-item">
-			          <a class="nav-link" href="/Billetera/usuarios">Usuarios</a>
+			          <a class="nav-link" href="/Billetera/app?action=listarUsuarios">Usuarios</a>
 			        </li>
 	        	</c:if>
 	        	<c:if test="${not empty sessionScope.usuario and sessionScope.usuario.rol == 'USER'}">
@@ -63,7 +63,7 @@
           			<ul class="dropdown-menu">
             			<li><a class="dropdown-item" href="/Billetera/editarPerfil">Perfil</a></li>
 		          		<li><hr class="dropdown-divider"></li>
-		          		<li><a class="dropdown-item" href="/Billetera/logout">Cerrar sesión</a></li>
+		          		<li><a class="dropdown-item" href="/Billetera/app?action=logout">Cerrar sesión</a></li>
             		</ul>
 		        </li>
         	</c:otherwise>

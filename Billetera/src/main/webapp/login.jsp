@@ -20,7 +20,7 @@
       		Usuario o contraseña incorrectos
       	</div>
       <% } %>
-      <form id="loginForm" action="login" method="post">
+      <form id="loginForm" action="/Billetera/app?action=validarLogin" method="post">
 	      <div class="input-group m-1">
 	        <input
 	          class="form-control"

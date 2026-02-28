@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class LogoutServlet
  */
-@WebServlet(name = "logout", urlPatterns = { "/logout" })
+//@WebServlet(name = "logout", urlPatterns = { "/logout" })
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

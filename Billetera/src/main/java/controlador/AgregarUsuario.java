@@ -19,7 +19,7 @@ import dao.UserDAO;
 /**
  * Servlet implementation class AgregarUsuario
  */
-@WebServlet(name = "agregar", urlPatterns = { "/agregar" })
+//@WebServlet(name = "agregar", urlPatterns = { "/agregar" })
 public class AgregarUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

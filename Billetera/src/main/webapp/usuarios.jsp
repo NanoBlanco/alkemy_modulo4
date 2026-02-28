@@ -8,7 +8,7 @@
 	    Usuarios
 	  </div>
 	  <div>
-	  	<a class="btn btn-sm btn-primary" href="/Billetera/agregar" style="text-decoration: none;">Nuevo Usuario</a>
+	  	<a class="btn btn-sm btn-primary" href="/Billetera/app?action=nuevoUsuario" style="text-decoration: none;">Nuevo Usuario</a>
 	  </div>
 	  </div>
 	  <div class="card-body">
@@ -30,8 +30,9 @@
 			      <td>${usuario.correo}</td>
 			      <td>${usuario.rol}</td>
 			      <td>
-			      	<a class="btn btn-sm btn-primary" href="/Billetera/editarUsuario?id=${usuario.id}" style="text-decoration: none;">Editar</a>
-			      	<a class="btn btn-sm btn-warning" href="#" style="text-decoration: none;">Eliminar</a>
+			      	<a class="btn btn-sm btn-primary" href="/Billetera/app?action=editarUsuario&id=${usuario.id}" style="text-decoration: none;">Editar</a>
+			      	<a class="btn btn-sm btn-warning" href="/Billetera/app?action=eliminarUsuario&id=${usuario.id}" style="text-decoration: none;"
+			      	onclick="return confirm('¿Eliminar ${usuario.nombre}?')">Eliminar</a>
 			      </td>
 			    </tr>
 		    </c:forEach>

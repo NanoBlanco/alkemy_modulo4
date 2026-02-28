@@ -19,7 +19,7 @@ import dao.UserDAO;
 /**
  * Servlet implementation class EditarUsuarioServlet
  */
-@WebServlet(name = "editarUsuario", urlPatterns = { "/editarUsuario" })
+//@WebServlet(name = "editarUsuario", urlPatterns = { "/editarUsuario" })
 public class EditarUsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

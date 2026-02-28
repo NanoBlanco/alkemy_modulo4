@@ -1,19 +1,9 @@
 package controlador;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import controlador.command.ActualizarContactoCommand;
 import controlador.command.Command;
 import controlador.command.CommandFactory;
-import controlador.command.EditarContactoCommand;
-import controlador.command.EliminarContactoCommand;
-import controlador.command.GuardarContactoCommand;
-import controlador.command.ListarContactoCommand;
-import controlador.command.NuevoContactoCommand;
-import jakarta.servlet.Servlet;
-import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

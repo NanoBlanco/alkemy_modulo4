@@ -17,7 +17,7 @@
           <label class="etiqueta" for="correo">Correo</label>
           <input class="entrada" type="email" name="correo" id="correo" placeholder="Ej: correo@dominio.cl" />
         </div>
-        <button type="submit" id="btnAgregar">Registrar</button>
+        <button type="submit" class="btn btn-sm btn-primary">Registrar</button>
       </div>
       </form>
       <table>
