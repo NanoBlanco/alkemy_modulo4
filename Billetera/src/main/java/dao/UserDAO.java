@@ -14,35 +14,32 @@ import modelos.Usuario;
 
 public class UserDAO implements IUserDAO {
 	
-	private final Connection cnx;
-	
-	public UserDAO() {
-		this.cnx = DBConnection.getConnection();
-	}
+	public UserDAO() {	}
 
 	@Override
 	public void guardar(Usuario entidad) {
-		try (PreparedStatement ps = cnx.prepareStatement("INSERT INTO usuarios (nombre, correo, clave, rol) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+		try (Connection cnx = DBConnection.getConnection(); 
+				PreparedStatement ps = cnx.prepareStatement("INSERT INTO usuarios (nombre, correo, clave, rol) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
 			ps.setString(1, entidad.getNombre());
 			ps.setString(2, entidad.getCorreo());
 			ps.setString(3, entidad.getClave());
 			ps.setString(4, entidad.getRol());
 			ps.executeUpdate() ;
-			System.out.println("Valores recibidos ");
 			try (ResultSet keys = ps.getGeneratedKeys()){
 				if(keys.next()) {
 					entidad.setId(keys.getInt(1));
 				}
 			}
 		}catch(SQLException e) {
-			System.out.println("Error: "+e.getMessage());
+			throw new RuntimeException("Error al guardar usuario", e);
 		}
 		
 	}
 	
 	@Override
 	public Usuario buscarPorId(Integer id) {
-		try (PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios WHERE id = ?")) {
+		try (Connection cnx = DBConnection.getConnection(); 
+				PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios WHERE id = ?")) {
 			ps.setInt(1, id);
 			try (ResultSet rs = ps.executeQuery()){
 				if(rs.next()) {
@@ -50,7 +47,7 @@ public class UserDAO implements IUserDAO {
 				}
 			}
 		}catch(SQLException e) {
-			System.out.println("Error: "+e.getMessage());
+			throw new RuntimeException("Error al buscar usuario", e);
 		}
 		return null;
 	}
@@ -58,20 +55,22 @@ public class UserDAO implements IUserDAO {
 	@Override
 	public List<Usuario> listar() {
 		List<Usuario> lista = new ArrayList<>();
-		try (PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios");
+		try (Connection cnx = DBConnection.getConnection(); 
+				PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios");
 				ResultSet rs = ps.executeQuery()) {
 			while(rs.next()) {
 				lista.add(mapear(rs));
 			}
 		}catch(SQLException e) {
-			System.out.println("Error: "+e.getMessage());
+			throw new RuntimeException("Error al listar usuarios", e);
 		}
 		return lista;
 	}
 
 	@Override
 	public void actualizar(Usuario entidad) {
-		try (PreparedStatement ps = cnx.prepareStatement("UPDATE usuarios SET nombre = ?, correo = ?, rol = ? WHERE id = ?")) {
+		try (Connection cnx = DBConnection.getConnection(); 
+				PreparedStatement ps = cnx.prepareStatement("UPDATE usuarios SET nombre = ?, correo = ?, rol = ? WHERE id = ?")) {
 			ps.setString(1, entidad.getNombre());
 			ps.setString(2, entidad.getCorreo());
 			ps.setString(3, entidad.getRol());
@@ -79,24 +78,26 @@ public class UserDAO implements IUserDAO {
 			ps.executeUpdate();
 			
 		}catch(SQLException e) {
-			System.out.println("Error: "+e.getMessage());
+			throw new RuntimeException("Error al actualizar usuario", e);
 		}
 		
 	}
 
 	@Override
 	public void eliminar(Integer id) {
-		try (PreparedStatement ps = cnx.prepareStatement("DELETE FROM usuarios WHERE id = ?")) {
+		try (Connection cnx = DBConnection.getConnection(); 
+				PreparedStatement ps = cnx.prepareStatement("DELETE FROM usuarios WHERE id = ?")) {
 			ps.setInt(1, id);
 			ps.executeUpdate();
 		}catch(SQLException e) {
-			System.out.println("Error: "+e.getMessage());
+			throw new RuntimeException("Error al eliminar usuario", e);
 		}		
 	}
 
 	@Override
 	public Usuario buscarUsuario(String correo) {
-		try (PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios WHERE correo = ?")) {
+		try (Connection cnx = DBConnection.getConnection(); 
+				PreparedStatement ps = cnx.prepareStatement("SELECT id, nombre, correo, clave, rol FROM usuarios WHERE correo = ?")) {
 			ps.setString(1, correo);
 			try (ResultSet rs = ps.executeQuery()){
 				if(rs.next()) {
@@ -104,7 +105,7 @@ public class UserDAO implements IUserDAO {
 				}
 			}
 		}catch(SQLException e) {
-			System.out.println("Error: "+e.getMessage());
+			throw new RuntimeException("Error al buscar usuario por correo", e);
 		}
 		return null;
 	}

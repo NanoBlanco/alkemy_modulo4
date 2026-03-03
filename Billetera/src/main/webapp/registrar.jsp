@@ -27,7 +27,7 @@
       	</div>
       <% } %>
      
-      <form id="registrarForm" action="${modo == 'editar' ? 'editarPerfil' : 'registrar'}" method="post">
+      <form id="registrarForm" action="/Billetera/app?action=${modo == 'editar' ? 'actualizarRegistro' : 'guardarRegistro'}" method="post">
       	  <c:if test="${modo == 'editar'}">
     		<input type="hidden" name="id" value="${u.id}" />
     		<input type="hidden" name="rol" value ="${u.rol }" />

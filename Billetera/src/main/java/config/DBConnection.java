@@ -6,37 +6,24 @@ import java.sql.SQLException;
 
 public class DBConnection {
 	
-	private static Connection cnx = null;
-	
-	private DBConnection() {
-    	try {
-    		
-    		//1. Cargamos el driver
+	private static final String URL =
+	        "jdbc:mysql://localhost:3306/e_wallet";
+	    private static final String USER = "root";
+	    private static final String PASS = "";
+	    
+	static {
+    	try {    		
+    		// load driver
     		Class.forName("com.mysql.cj.jdbc.Driver");
     		
-    		//2. Creamos la conexion
-    		cnx = DriverManager.getConnection("jdbc:mysql://localhost:3306/e_wallet","root","");
-    		
-			//3. Verificamos
-			if(cnx != null) {
-				System.out.println("Conexion establecida");
-			}else {
-				System.out.println("Fallo la conexion");
-			}
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
 		} catch(ClassNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
         
     }
     
-    public static Connection getConnection() {
-    	if(cnx == null) {
-    		new DBConnection();
-    	}
-    	return cnx;
-    }
+    public static Connection getConnection() throws SQLException {
+    	return DriverManager.getConnection(URL,USER,PASS);    }
 	
 	
 }

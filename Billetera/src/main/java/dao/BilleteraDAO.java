@@ -2,9 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import config.DBConnection;
 import interfaces.IBilletera;
@@ -12,15 +10,12 @@ import modelos.Moneda;
 
 public class BilleteraDAO implements IBilletera{
 
-	private final Connection cnx;
-	
-	public BilleteraDAO() {
-		this.cnx = DBConnection.getConnection();
-	}
+	public BilleteraDAO() { }
 	
 	@Override
 	public void generarBilletera(int id) {
-		try (PreparedStatement ps = cnx.prepareStatement("INSERT INTO billeteras (id_usuario, saldo, moneda) VALUES (?, ?, ?)")) {
+		try ( Connection cnx = DBConnection.getConnection();
+				PreparedStatement ps = cnx.prepareStatement("INSERT INTO billeteras (id_usuario, saldo, moneda) VALUES (?, ?, ?)")) {
 			ps.setInt(1, id);
 			ps.setInt(2, 0);
 			ps.setString(3, "CLP");
@@ -42,7 +37,8 @@ public class BilleteraDAO implements IBilletera{
 	@Override
 	public void transaccion(int id, String m, int monto, String operacion) {
 		if (operacion.equalsIgnoreCase("deposito")) {
-			try (PreparedStatement ps = cnx.prepareStatement("INSERT INTO transacciones (id_usuario, tipo_transaccion, moneda, monto) VALUES (?, ?, ?, ?)");
+			try (Connection cnx = DBConnection.getConnection();
+					PreparedStatement ps = cnx.prepareStatement("INSERT INTO transacciones (id_usuario, tipo_transaccion, moneda, monto) VALUES (?, ?, ?, ?)");
 					PreparedStatement ps2 = cnx.prepareStatement("UPDATE billeteras SET saldo = ? WHERE id_usuario = ? AND moneda = ?")) {
 				ps.setInt(1, id);
 				ps.setString(2, operacion);

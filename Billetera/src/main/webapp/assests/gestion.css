@@ -19,7 +19,7 @@ h2 {
     padding-bottom: 10px;
 }
 
-.form-section {
+.sectionContacto {
     background: #f8f9fa;
     padding: 20px;
     border-radius: 8px;
@@ -29,20 +29,20 @@ h2 {
     align-items: flex-end;
 }
 
-.form-group {
+.form-group-contacto {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-label {
+.label-contacto {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 5px;
     color: #555;
 }
 
-input {
+.input-contacto {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;

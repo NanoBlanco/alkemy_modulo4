@@ -51,7 +51,7 @@
 		      </button>
 	      </div>
 	      <div>
-	      	<a href="/Billetera/registrar" style="text-decoration: none">Registrarse</a>
+	      	<a href="/Billetera/app?action=nuevoRegistro" style="text-decoration: none">Registrarse</a>
 	      </div>
 	      </div>
       </form>

@@ -19,11 +19,11 @@
 	<link rel="stylesheet" href="assests/estilo.css" />
 	<title>e-Wallet</title>
 </head>
-<body class="bg-light" >
+<body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Billetera Digital</a>
+    <a class="navbar-brand" href="#">e-Wallet</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -48,11 +48,11 @@
 			        <li class="nav-item dropdown">
 			          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Transacciones</a>
 			          <ul class="dropdown-menu">
-	            			<li><a class="dropdown-item" href="/Billetera/deposito">Depositos</a></li>
+	            			<li><a class="dropdown-item" href="/Billetera/app?action=deposito">Depositos</a></li>
 	            			<li><a class="dropdown-item" href="#">Retiros</a></li>
 	            			<li><a class="dropdown-item" href="#">Transferencias</a></li>
 			          		<li><hr class="dropdown-divider"></li>
-			          		<li><a class="dropdown-item" href="/Billetera/contactos">Contactos</a></li>
+			          		<li><a class="dropdown-item" href="/Billetera/app?action=contactos">Contactos</a></li>
 	            		</ul>
 			        </li>
 		        </c:if>
@@ -61,7 +61,7 @@
             			<c:out value="${sessionScope.usuario.nombre}" />
           			</a>
           			<ul class="dropdown-menu">
-            			<li><a class="dropdown-item" href="/Billetera/editarPerfil">Perfil</a></li>
+            			<li><a class="dropdown-item" href="/Billetera/app?action=editarRegistro">Perfil</a></li>
 		          		<li><hr class="dropdown-divider"></li>
 		          		<li><a class="dropdown-item" href="/Billetera/app?action=logout">Cerrar sesión</a></li>
             		</ul>
