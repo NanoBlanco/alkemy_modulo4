@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+         https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+
+    <display-name>Biblioteca Digital</display-name>
+    <description>Sistema de gestión de biblioteca - Java 17 + HikariCP + MVC</description>
+
+    <!-- Encoding de caracteres para todos los requests -->
+    <filter>
+        <filter-name>CharacterEncodingFilter</filter-name>
+        <filter-class>jakarta.servlet.http.HttpFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+
+    <!-- Página de bienvenida redirige al Dashboard -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Páginas de error personalizadas -->
+    <error-page>
+        <error-code>404</error-code>
+        <location>/WEB-INF/views/error/404.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/WEB-INF/views/error/500.jsp</location>
+    </error-page>
+
+    <!-- Timeout de sesión: 30 minutos -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+</web-app>

@@ -1,0 +1,32 @@
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %-40logger{40} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/biblioteca.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/biblioteca.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %-40logger{40} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- HikariCP: reducir verbosidad en desarrollo -->
+    <logger name="com.zaxxer.hikari" level="INFO"/>
+    <logger name="com.zaxxer.hikari.HikariConfig" level="INFO"/>
+
+    <!-- Nuestra aplicación: nivel DEBUG para ver todo en desarrollo -->
+    <logger name="com.empresa.biblioteca" level="DEBUG"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+
+</configuration>

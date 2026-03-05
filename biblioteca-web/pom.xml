@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.empresa.biblioteca</groupId>
+  <artifactId>biblioteca-web</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>war</packaging>
+
+  <name>Biblioteca Digital Web</name>
+  <description>Sistema de gestión de biblioteca - versión web con HikariCP</description>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- Versiones centralizadas -->
+    <jakartaee.version>6.0.0</jakartaee.version>
+    <hikari.version>5.1.0</hikari.version>
+    <h2.version>2.2.224</h2.version>
+    <gson.version>2.10.1</gson.version>
+    <slf4j.version>2.0.9</slf4j.version>
+    <logback.version>1.4.14</logback.version>
+    <junit.version>5.11.2</junit.version>
+    <mockito.version>5.14.2</mockito.version>
+    <tomcat.version>10.1.18</tomcat.version>
+  </properties>
+
+  <dependencies>
+
+    <!-- ═══ Jakarta EE 6 – Servlet API ═══ -->
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>${jakartaee.version}</version>
+      <scope>provided</scope>
+      <!-- PROVIDED: Tomcat ya la tiene, no la empaquetamos -->
+    </dependency>
+    <!-- JSP API -->
+        <dependency>
+            <groupId>jakarta.servlet.jsp</groupId>
+            <artifactId>jakarta.servlet.jsp-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+	<dependency>
+            <groupId>jakarta.servlet.jsp.jstl</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.web</groupId>
+            <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+    <!-- ═══ HikariCP – Connection Pool ═══ -->
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>${hikari.version}</version>
+    </dependency>
+
+    <!-- ═══ H2 Database – Base de datos embebida ═══ -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2.version}</version>
+    </dependency>
+
+    <!-- ═══ Gson – Serialización JSON ═══ -->
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+    </dependency>
+
+    <!-- ═══ SLF4J – Logging API ═══ -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <!-- ═══ Logback – Implementación de logging ═══ -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>${logback.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <!-- ═══ JUnit 5 – Tests ═══ -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- ═══ Mockito – Mocking en tests ═══ -->
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+	<!-- Source: https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+	<dependency>
+	    <groupId>org.mockito</groupId>
+	    <artifactId>mockito-junit-jupiter</artifactId>
+	    <version>5.22.0</version>
+	    <scope>test</scope>
+	</dependency>
+    
+    
+  </dependencies>
+
+  <build>
+    <finalName>biblioteca-web</finalName>
+
+    <plugins>
+
+      <!-- Compilador Java 17 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version>
+        <configuration>
+          <source>17</source>
+          <target>17</target>
+          <encoding>UTF-8</encoding>
+        </configuration>
+      </plugin>
+
+      <!-- Surefire – ejecutar tests JUnit 5 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.3</version>
+      </plugin>
+
+      <!-- WAR plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+
+      <!-- Tomcat 10 embebido para desarrollo -->
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat10-maven-plugin</artifactId>
+        <version>2.0-beta-1</version>
+        <configuration>
+          <port>8080</port>
+          <path>/biblioteca</path>
+        </configuration>
+      </plugin>
+
+      <!-- JaCoCo – cobertura de código -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
+        <executions>
+          <execution>
+            <goals><goal>prepare-agent</goal></goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals><goal>report</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <!-- Perfiles para diferentes entornos -->
+  <profiles>
+
+    <profile>
+      <id>desarrollo</id>
+      <activation><activeByDefault>true</activeByDefault></activation>
+      <properties>
+        <db.url>jdbc:h2:mem:biblioteca_dev;DB_CLOSE_DELAY=-1;MODE=MySQL</db.url>
+        <db.driver>org.h2.Driver</db.driver>
+        <db.usuario>sa</db.usuario>
+        <db.password></db.password>
+        <hikari.pool.size>5</hikari.pool.size>
+        <log.level>DEBUG</log.level>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>produccion</id>
+      <properties>
+        <db.url>jdbc:mysql://localhost:3306/biblioteca_prod</db.url>
+        <db.driver>com.mysql.cj.jdbc.Driver</db.driver>
+        <db.usuario>${env.DB_USER}</db.usuario>
+        <db.password>${env.DB_PASS}</db.password>
+        <hikari.pool.size>20</hikari.pool.size>
+        <log.level>WARN</log.level>
+      </properties>
+    </profile>
+
+  </profiles>
+
+</project>
