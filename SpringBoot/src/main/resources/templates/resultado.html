@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Resultado</title>
+</head>
+<body>
+	<h2>Datos Recibidos</h2>
+	<br><br>
+	<p th:text="'Nombre: '+${usuario.nombre}"></p>
+	<p th:text="'Correo: '+${usuario.correo}"></p>
+	<br><br>
+	<a th:href="@{/formulario}">Volver</a>
+</body>
+</html>

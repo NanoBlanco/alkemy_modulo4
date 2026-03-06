@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Inicio</title>
+</head>
+<body>
+	<h1>Bienvenido</h1>
+	<br>
+	<h3 th:text="${mensaje}">Texto por defecto</h3>
+	<br>
+	<p th:text="'Fecha actual: '+ ${fecha}"></p>
+	<p>Aplicación Spring Boot funcionando correctamente</p>
+	<br>
+	<a th:href="@{/saludo?nombre=Renny}">Ir a saludo</a>
+</body>
+</html>
