@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Inventario</title>
+</head>
+<body>
+	<h2>Producto</h2>
+	<br>
+	<form th:action="@{/productos/guardar}" th:object="${producto}" method="post">
+		<input type="hidden" th:field="*{id}" />
+		<div>
+			Nombre
+			<input type="text" th:field="*{nombre}" />
+		</div>
+		<div>
+			Descripción
+			<input type="text" th:field="*{descripcion}" />
+		</div>
+		<div>
+			Precio
+			<input type="number" th:field="*{precio}" />
+		</div>
+		<div>
+			Stock
+			<input type="number" th:field="*{stock}" />
+		</div>
+		<div>
+			Stock mínimo
+			<input type="number" th:field="*{stockMin}" />
+		</div>
+		<div>
+			Categoria
+			<select th:field="*{categoria}">
+				<option th:each="c : ${categorias}" th:value="${c.id}" th:text="${c.nombre}">
+				</option>
+			</select>
+		</div>
+		<br>
+		<button type="submit">Guardar</button>
+	</form>
+</body>
+</html>

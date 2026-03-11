@@ -1,0 +1,49 @@
+CREATE TABLE users(
+
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+username VARCHAR(50),
+email VARCHAR(100),
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE posts(
+
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+title VARCHAR(200),
+content TEXT,
+user_id BIGINT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+CONSTRAINT fk_post_user
+FOREIGN KEY(user_id)
+REFERENCES users(id)
+);
+
+CREATE TABLE comments(
+
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+content TEXT,
+post_id BIGINT,
+created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+CONSTRAINT fk_comment_post
+FOREIGN KEY(post_id)
+REFERENCES posts(id)
+);
+
+CREATE TABLE tags(
+
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+name VARCHAR(50)
+);
+
+CREATE TABLE post_tags(
+
+post_id BIGINT,
+tag_id BIGINT,
+
+PRIMARY KEY(post_id, tag_id),
+
+FOREIGN KEY(post_id) REFERENCES posts(id),
+FOREIGN KEY(tag_id) REFERENCES tags(id)
+);

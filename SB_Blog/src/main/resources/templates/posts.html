@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Posts</title>
+</head>
+<body>
+	<h2>Lista de Post</h2>
+	<br><br>
+	<div>
+		Buscar por Tag
+		<input id="tag" placeholder="tag name" />
+		<br>
+		<button onclick="buscar()">Buscar</button>
+	</div>
+	<div id="posts"></div>
+	<script>
+		function loadPosts(url){
+			fetch(url)
+			.then(res => res.json())
+			.then(data => {
+				let html = "";
+				
+				data.forEach(p=>{
+					html+=`
+						<h3>${p.title}</h3>
+						<p>${p.content}</p>
+						<b>Author:</b> ${p.author}
+						<br>
+						<b>Tags:</b> ${p.tags.join(",")}
+						<hr>
+					`;
+				});
+				
+				document.getElementById("posts").innerHTML = html;
+			});
+		}
+		
+		function buscar(){
+			let tag = document.getElementById("tag").value;
+			
+			loadPosts("/api/posts/tag"+tag);
+		}
+		loadPosts("/api/posts");
+	</script>
+</body>
+</html>

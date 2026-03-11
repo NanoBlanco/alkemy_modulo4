@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Usuarios</title>
+</head>
+<body>
+	<h2>Registro de usuarios</h2>
+	<div th:if="${mensajeExito}" style="color: green">
+		<p th:text="${mensajeExito}"></p>
+	</div>
+	<form th:action="@{/usuarios}" th:object="${usuario}" method="post"> 
+		<input type="hidden" th:field="*{id}" />
+		<div>
+			<label>Nombre:</label>
+			<input type="text" th:field="*{nombre}" />
+			<span style="color:red" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+		</div>
+		<br><br>
+		<div>
+			<label>Correo:</label>
+			<input type="email" th:field="*{correo}" />
+			<span style="color:red" th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}"></span>
+		</div>
+		<br><br>
+		<div>
+			<label>Clave:</label>
+			<input type="text" th:field="*{clave}" />
+			<span style="color:red" th:if="${#fields.hasErrors('clave')}" th:errors="*{clave}"></span>
+		</div>
+		<br><br>
+		<div th:each="rol : ${roles}">
+			Roles
+			<label>
+				<input type="checkbox"
+						th:value="${rol.id}"
+						th:field="*{roles}" />
+				<span th:text="${rol.nombre}"></span>
+			</label>
+		</div>
+		<br><br>
+		<button type="submit">Enviar</button>
+	</form>
+</body>
+</html>
