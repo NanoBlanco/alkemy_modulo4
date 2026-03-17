@@ -34,10 +34,12 @@ public class AuthService {
         //SecurityContextHolder.getContext().setAuthentication(authentication);
         
         String token = jwtService.generateToken(user);
+        String refreshToken = jwtService.generateRefreshToken(user);
 
         return new AuthLoginResponse(
                 request.username(),
                 token,
+                refreshToken,
                 true
         );
     }

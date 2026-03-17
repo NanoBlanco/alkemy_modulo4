@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+</head>
+<body>
+	<h2>Iniciar sesión</h2>
+	<form id="loginForm" th:action="@{/auth/login}" method="post">
+		<div>
+			Usuario:
+			<input type="text" id="username" name="username" required/>
+		</div>
+		<br>
+		<div>
+			Clave:
+			<input type="password" id="password" name="password" required/>
+		</div>
+		<br>
+		<button type="submit">Entrar</button>
+	</form>
+	<!-- 
+	<script>
+	
+		document.getElementById("loginForm").addEventListener("submit", async function(e) {
+		    e.preventDefault();
+			console.log("Entro");
+		    const data = {
+		        username: document.getElementById("username").value,
+		        password: document.getElementById("password").value
+		    };
+	
+		    const response = await fetch("/auth/login", {
+		        method: "POST",
+		        headers: {
+		            "Content-Type": "application/json"
+		        },
+		        body: JSON.stringify(data)
+		    });
+	
+		    if (response.ok) {
+		        const result = await response.json();
+	
+		        // guardar token
+		        localStorage.setItem("token", result.token);
+				
+		        // redirigir
+		        window.location.href = "/auth/dashboard";
+		    } else {
+		        alert("Login incorrecto");
+		    }
+		});
+	</script>
+	 -->
+</body>
+</html>
