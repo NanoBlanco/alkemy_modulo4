@@ -7,16 +7,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Entidad Post — tabla: posts
- *
- * Relaciones:
- *  - @ManyToOne  con Usuario   (propietario de FK autor_id)
- *  - @ManyToMany con Etiqueta  (propietario de la tabla intermedia post_etiqueta)
- *
- * La tabla intermedia post_etiqueta tiene columna extra:
- *  fecha_aplicacion → se gestiona mediante la entidad PostEtiqueta.
- */
 @Entity
 @Table(name = "posts")
 @Getter

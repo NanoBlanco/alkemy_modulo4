@@ -8,12 +8,6 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-/**
- * Mapper manual — convierte entre Entidades y DTOs.
- *
- * Se hace manual (sin MapStruct) para que los estudiantes
- * entiendan exactamente qué campos se mapean y por qué.
- */
 @Component
 public class BlogMapper {
 

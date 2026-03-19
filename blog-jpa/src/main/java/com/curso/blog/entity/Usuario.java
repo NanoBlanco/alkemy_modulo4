@@ -7,13 +7,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Entidad Usuario — tabla: usuarios
- *
- * Relaciones:
- *  - @OneToOne  con Perfil        (un usuario tiene UN perfil)
- *  - @OneToMany con Post          (un usuario puede tener MUCHOS posts)
- */
 @Entity
 @Table(name = "usuarios",
        uniqueConstraints = @UniqueConstraint(name = "uk_usuario_email", columnNames = "email"))

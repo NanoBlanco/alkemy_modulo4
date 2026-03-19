@@ -3,14 +3,6 @@ package com.curso.blog.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-/**
- * Entidad Perfil — tabla: perfiles
- *
- * Relaciones:
- *  - @OneToOne con Usuario  (lado PROPIETARIO — tiene la FK usuario_id)
- *
- * Regla: un Perfil no puede existir sin un Usuario.
- */
 @Entity
 @Table(name = "perfiles")
 @Getter

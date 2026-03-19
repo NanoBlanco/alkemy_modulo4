@@ -8,11 +8,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
-/**
- * DTOs de salida (Response) — lo que el API devuelve al cliente.
- * Evitan exponer entidades JPA directamente (previene referencias circulares,
- * LazyInitializationException y campos innecesarios).
- */
 public class ResponseDTOs {
 
     // =============================================

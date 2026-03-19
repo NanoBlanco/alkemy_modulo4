@@ -6,14 +6,6 @@ import lombok.*;
 
 import java.io.Serializable;
 
-/**
- * Clave compuesta para la entidad intermedia PostEtiqueta.
- *
- * Requerimientos de JPA para @Embeddable:
- *  1. Implementar Serializable
- *  2. Implementar equals() y hashCode()
- *  3. Constructor sin argumentos
- */
 @Embeddable
 @Getter
 @Setter

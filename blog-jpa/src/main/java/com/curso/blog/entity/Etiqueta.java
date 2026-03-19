@@ -6,15 +6,6 @@ import lombok.*;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Entidad Etiqueta (Tag) — tabla: etiquetas
- *
- * Relaciones:
- *  - @ManyToMany con Post  (lado INVERSO — mappedBy)
- *
- * Una etiqueta puede estar aplicada en muchos Posts.
- * Un Post puede tener muchas Etiquetas.
- */
 @Entity
 @Table(name = "etiquetas",
        uniqueConstraints = @UniqueConstraint(name = "uk_etiqueta_nombre", columnNames = "nombre"))

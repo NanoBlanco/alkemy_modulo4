@@ -5,16 +5,6 @@ import lombok.*;
 
 import java.time.LocalDate;
 
-/**
- * Entidad Intermedia PostEtiqueta — tabla: post_etiqueta_detalle
- *
- * Modela la relación N:M entre Post y Etiqueta con atributos extra:
- *  - fecha_aplicacion : cuándo se agregó la etiqueta al post
- *  - notas            : observaciones opcionales
- *
- * Usa @EmbeddedId con clave compuesta (post_id + etiqueta_id).
- * Usa @MapsId para vincular las FK con los campos del @EmbeddedId.
- */
 @Entity
 @Table(name = "post_etiqueta_detalle")
 @Getter

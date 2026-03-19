@@ -9,10 +9,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Repositorio de Usuario.
- * Extiende JpaRepository → hereda CRUD completo + paginación.
- */
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 

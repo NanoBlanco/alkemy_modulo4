@@ -1,5 +1,6 @@
 package com.reinaldo.api.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -44,7 +45,7 @@ public class Producto {
 	@Min(0)
 	private Integer stock;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "categoria_id")
 	private Categoria categoria;
 }

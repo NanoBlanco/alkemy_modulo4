@@ -57,8 +57,8 @@ public class ProductoController {
 		return ResponseEntity.ok(mapper.toDTO(p));
 	}
 	
-	@GetMapping
 	@Operation(summary="Listar productos con filtros")
+	@GetMapping
 	public ResponseEntity<Page<ProductoResponseDTO>> buscar(
 			@RequestParam(required=false) String nombre,
 			@RequestParam(required=false) Long categoria,

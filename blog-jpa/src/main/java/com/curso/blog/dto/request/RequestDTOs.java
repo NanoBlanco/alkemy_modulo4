@@ -3,10 +3,6 @@ package com.curso.blog.dto.request;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
-/**
- * DTOs de entrada (Request) — lo que el cliente envía al API.
- * Separar DTOs de las entidades evita exponer la estructura interna de BD.
- */
 public class RequestDTOs {
 
     // =============================================

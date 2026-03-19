@@ -18,12 +18,6 @@ import com.curso.blog.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Inicializador de datos de prueba.
- * Se ejecuta al iniciar la aplicación SOLO en el perfil 'dev'.
- *
- * Actívalo con: spring.profiles.active=dev en application.properties
- */
 @Component
 @Profile("dev")
 @RequiredArgsConstructor
@@ -60,7 +54,7 @@ public class DataInitializer implements CommandLineRunner {
             "Arquitecto de software, apasionado por DDD y microservicios",
             null, null, "Valparaíso");
 
-        // 3. Crear posts con relación @ManyToOne → @OneToMany
+        // 3. Crear posts con relacion @ManyToOne → @OneToMany
         Post post1 = crearPost(
             "Introducción a JPA con Spring Boot 3",
             "JPA (Jakarta Persistence API) es el estándar de Java para persistencia de datos...\n" +
@@ -94,7 +88,6 @@ public class DataInitializer implements CommandLineRunner {
             "Cómo usar JOIN FETCH para optimizar queries y evitar N+1",
             luis
         );
-        // post4 queda como BORRADOR
 
         // 4. Relacionar posts con etiquetas (@ManyToMany)
         post1.agregarEtiqueta(java);

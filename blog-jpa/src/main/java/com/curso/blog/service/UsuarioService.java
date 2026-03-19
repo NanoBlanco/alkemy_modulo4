@@ -5,11 +5,6 @@ import com.curso.blog.dto.response.ResponseDTOs.*;
 
 import java.util.List;
 
-// ============================================================
-//  Interfaces de Servicio — definen el CONTRATO de negocio
-//  Las implementaciones están en service/impl/
-// ============================================================
-
 public interface UsuarioService {
     UsuarioResponse         crearUsuario(CrearUsuarioRequest request);
     UsuarioResponse         obtenerPorId(Long id);

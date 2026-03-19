@@ -11,17 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Controlador REST para Usuarios.
- *
- * Capa: Controller → Service → Repository → BD
- *
- * El Controller SOLO se encarga de:
- *  1. Recibir la petición HTTP
- *  2. Delegar al Service
- *  3. Retornar la respuesta HTTP
- * NUNCA contiene lógica de negocio.
- */
 @RestController
 @RequestMapping("/api/v1/usuarios")
 @RequiredArgsConstructor
