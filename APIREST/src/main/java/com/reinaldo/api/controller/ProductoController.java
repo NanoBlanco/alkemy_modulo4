@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,7 @@ public class ProductoController {
 	private final ProductoService servicio;
 	private final ProductoMapper mapper;
 	
+	@PreAuthorize("hasRole('USER')")
 	@Operation(summary = "Lista todos los productos")
 	@GetMapping
 	public List<Producto> listar() {
@@ -45,6 +47,7 @@ public class ProductoController {
 		return servicio.obtener(id);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@Operation(summary = "Crea un producto")
 	@PostMapping
 	public ResponseEntity<ProductoResponseDTO> crear(@Valid @RequestBody ProductoRequestDTO dto) {
