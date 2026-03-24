@@ -34,7 +34,6 @@ public class ProductoController {
 	private final ProductoService servicio;
 	private final ProductoMapper mapper;
 	
-	@PreAuthorize("hasRole('USER')")
 	@Operation(summary = "Lista todos los productos")
 	@GetMapping
 	public List<Producto> listar() {
@@ -51,7 +50,11 @@ public class ProductoController {
 	@Operation(summary = "Crea un producto")
 	@PostMapping
 	public ResponseEntity<ProductoResponseDTO> crear(@Valid @RequestBody ProductoRequestDTO dto) {
-		Producto p = Producto.builder().nombre(dto.nombre()).precio(dto.precio()).build();
+		Producto p = Producto.builder()
+				.nombre(dto.nombre())
+				.precio(dto.precio())
+				.stock(dto.stock())
+				.build();
 		Producto guardado = servicio.crear(p);
 		return ResponseEntity.status(HttpStatus.CREATED).body(mapper.mapToResponse(guardado));
 	}
@@ -59,7 +62,12 @@ public class ProductoController {
 	@Operation(summary = "Actualiza un producto")
 	@PutMapping("/{id}")
 	public ResponseEntity<ProductoResponseDTO> actualizar(@PathVariable Long id, @Valid @RequestBody ProductoRequestDTO dto) {
-		Producto p = Producto.builder().id(id).nombre(dto.nombre()).precio(dto.precio()).build();
+		Producto p = Producto.builder()
+				.id(id)
+				.nombre(dto.nombre())
+				.precio(dto.precio())
+				.stock(dto.stock())
+				.build();
 		Producto modificado = servicio.crear(p);
 		return ResponseEntity.ok().body(mapper.mapToResponse(modificado));
 	}

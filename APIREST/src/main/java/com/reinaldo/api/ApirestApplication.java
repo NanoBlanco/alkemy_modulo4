@@ -22,6 +22,7 @@ public class ApirestApplication {
 			repository.save(
 					Usuario.builder()
 					.username("admin")
+					.email("admin@mail.com")
 					.password(encoder.encode("1234"))
 					.role("ADMIN")
 					.build()

@@ -12,5 +12,7 @@ public record ProductoRequestDTO(
 
 		@NotNull
 		@Positive
-		Integer precio
+		Integer precio,
+		
+		Integer stock
 		){ }

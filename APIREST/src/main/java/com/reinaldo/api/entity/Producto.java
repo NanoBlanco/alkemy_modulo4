@@ -26,4 +26,5 @@ public class Producto {
 	
 	private String nombre;
 	private Integer precio;
+	private Integer stock;
 }

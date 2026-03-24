@@ -6,9 +6,11 @@ import java.util.List;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.reinaldo.api.service.CustomUserDetailsService;
 import com.reinaldo.api.service.JwtService;
 
 import jakarta.servlet.FilterChain;
@@ -22,10 +24,16 @@ import lombok.RequiredArgsConstructor;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
 	private final JwtService jwtService;
+	private final CustomUserDetailsService userDetailService;
 	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
+		
+		if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+		    filterChain.doFilter(request, response);
+		    return;
+		}
 		
 		if(request.getServletPath().contains("/api/auth")) {
 			filterChain.doFilter(request, response);
@@ -51,8 +59,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 			
 			if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 				
+				UserDetails userDetails = userDetailService.loadUserByUsername(username);
+				
 				UsernamePasswordAuthenticationToken auth = 
-						new UsernamePasswordAuthenticationToken(username, null, authorities); 
+						new UsernamePasswordAuthenticationToken(userDetails.getUsername(), null, userDetails.getAuthorities()); 
 				
 				SecurityContextHolder.getContext().setAuthentication(auth);
 			}

@@ -1,8 +1,11 @@
 package com.reinaldo.api.controller;
 
+import java.util.List;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reinaldo.api.dto.AuthRequest;
+import com.reinaldo.api.dto.AuthResponseDTO;
 import com.reinaldo.api.service.JwtService;
 
 import jakarta.validation.Valid;
@@ -24,9 +28,11 @@ public class AuthController {
 	private final AuthenticationManager authManager;
 	
 	@PostMapping("/login")
-	public String login(@Valid @RequestBody AuthRequest request) {
+	public AuthResponseDTO login(@Valid @RequestBody AuthRequest request) {
 		
 		try {
+			System.out.println("Username :"+request.username());
+			System.out.println("Password :"+request.password());
 			
 			Authentication auth = authManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
@@ -35,9 +41,21 @@ public class AuthController {
 							)
 					);
 			
+			
 			UserDetails userDetail = (UserDetails) auth.getPrincipal();
 			
-			return jwtService.generarToken(userDetail);
+			String token = jwtService.generarToken(userDetail);
+			
+			List<String> roles = userDetail.getAuthorities()
+			        .stream()
+			        .map(GrantedAuthority::getAuthority)
+			        .toList();
+
+			    return new AuthResponseDTO(
+			        token,
+			        userDetail.getUsername(),
+			        roles
+			    );
 		}catch(Exception e) {
 			System.out.println("Error auth: "+e.getMessage());
 			throw e;
