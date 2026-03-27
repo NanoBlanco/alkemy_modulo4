@@ -36,7 +36,8 @@ public class UsuarioService {
 		return repo.save(u);
 	}
 	
-	public void eliminar(Usuario p) {
+	public void eliminar(Long id) {
+		Usuario p = obtener(id);
 		repo.delete(p);
 	}
 	

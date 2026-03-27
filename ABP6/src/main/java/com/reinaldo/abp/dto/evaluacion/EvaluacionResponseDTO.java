@@ -7,7 +7,7 @@ public record EvaluacionResponseDTO(
 		Long id,
 		String nombre,
 		Double puntuacion,
-		Long cursoId
+		Long inscripcionId
 		) {
 
 }

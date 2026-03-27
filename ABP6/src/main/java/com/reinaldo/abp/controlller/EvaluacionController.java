@@ -1,7 +1,6 @@
 package com.reinaldo.abp.controlller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.reinaldo.abp.dto.evaluacion.EvaluacionRequestDTO;
 import com.reinaldo.abp.dto.evaluacion.EvaluacionResponseDTO;
+import com.reinaldo.abp.dto.evaluacion.TableroCursoDTO;
 import com.reinaldo.abp.mapper.EvaluacionMapper;
 import com.reinaldo.abp.service.EvaluacionService;
 
@@ -24,10 +24,11 @@ public class EvaluacionController {
 
 	private final EvaluacionService service;
 	
-	@PostMapping("/curso/{id}")
+	@PostMapping("/inscripcion/{id}")
 	public EvaluacionResponseDTO grabar(
 			@PathVariable Long id, 
 			@RequestBody EvaluacionRequestDTO dto) {
+		
 		var eval = EvaluacionMapper.toEntity(dto);
 		var grabado = service.grabar(id, eval);
 		return EvaluacionMapper.toDTO(grabado);
@@ -38,6 +39,11 @@ public class EvaluacionController {
 		return service.listar()
 				.stream()
 				.map(EvaluacionMapper::toDTO)
-				.collect(Collectors.toList());
+				.toList();
+	}
+	
+	@GetMapping("/tablero/{estudianteId}")
+	public List<TableroCursoDTO> tablero(@PathVariable Long estudianteId) {
+		return service.obtenerTablero(estudianteId);
 	}
 }

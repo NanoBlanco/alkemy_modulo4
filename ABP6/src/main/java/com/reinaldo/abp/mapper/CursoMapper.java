@@ -1,7 +1,5 @@
 package com.reinaldo.abp.mapper;
 
-import java.util.stream.Collectors;
-
 import org.springframework.stereotype.Component;
 
 import com.reinaldo.abp.dto.curso.CursoRequestDTO;
@@ -21,13 +19,6 @@ public class CursoMapper {
 		return CursoResponseDTO.builder()
 				.id(entity.getId())
 				.nombre(entity.getNombre())
-				.estudianteId(entity.getEstudiante() != null ? entity.getEstudiante().getId() : null)
-				.evaluaciones(entity.getEvaluaciones() != null 
-				? entity.getEvaluaciones()
-						.stream()
-						.map(EvaluacionMapper::toDTO)
-						.collect(Collectors.toList()) 
-						: null)
 				.build();
 	}
 }

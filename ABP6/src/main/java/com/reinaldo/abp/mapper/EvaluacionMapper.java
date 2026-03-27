@@ -21,7 +21,7 @@ public class EvaluacionMapper {
 				.id(entity.getId())
 				.nombre(entity.getNombre())
 				.puntuacion(entity.getPuntuacion())
-				.cursoId(entity.getCurso() != null ? entity.getCurso().getId() : null)
+				.inscripcionId(entity.getInscripcion().getId())
 				.build();
 	}
 }

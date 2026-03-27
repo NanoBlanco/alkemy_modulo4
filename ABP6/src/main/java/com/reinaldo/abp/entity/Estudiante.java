@@ -34,5 +34,5 @@ public class Estudiante {
 	private String correo;
 	
 	@OneToMany(mappedBy = "estudiante", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Curso> cursos;
+	private List<Inscripcion> inscripciones;
 }

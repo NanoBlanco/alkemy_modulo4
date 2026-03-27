@@ -2,6 +2,7 @@ package com.reinaldo.abp.controlller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,17 +23,26 @@ import com.reinaldo.abp.mapper.UsuarioMapper;
 import com.reinaldo.abp.service.UsuarioService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/usuarios")
-@RequiredArgsConstructor
 public class UsuarioController {
 
-	private final UsuarioService servicio;
-	private final UsuarioMapper mapper;
-	private final PasswordEncoder encoder;
-	
+	@Autowired
+	UsuarioService servicio;
+	@Autowired
+	UsuarioMapper mapper;
+	@Autowired
+	PasswordEncoder encoder;
+	/*
+	public UsuarioController(UsuarioService servicio,
+			UsuarioMapper mapper,
+			PasswordEncoder encoder) {
+		this.servicio = servicio;	
+		this.mapper = mapper;
+		this.encoder = encoder;
+	}
+	*/
 	@GetMapping
 	public List<Usuario> listar() {
 		return servicio.listar();
@@ -71,8 +81,7 @@ public class UsuarioController {
 	
 	@DeleteMapping("/{id}")
 	public void eliminar(@PathVariable Long id) {
-		Usuario u = servicio.obtener(id);
-		servicio.eliminar(u);
+		servicio.eliminar(id);
 	}
 	
 }

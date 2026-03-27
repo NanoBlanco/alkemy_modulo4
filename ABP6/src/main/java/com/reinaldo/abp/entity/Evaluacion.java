@@ -29,6 +29,6 @@ public class Evaluacion {
 	private Double puntuacion;
 	
 	@ManyToOne
-	@JoinColumn(name = "curso_id")
-	private Curso curso;
+	@JoinColumn(name = "inscripcion_id")
+	private Inscripcion inscripcion;
 }
