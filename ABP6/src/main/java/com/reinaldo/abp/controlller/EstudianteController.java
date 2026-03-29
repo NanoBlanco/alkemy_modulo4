@@ -3,6 +3,8 @@ package com.reinaldo.abp.controlller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,14 +42,15 @@ public class EstudianteController {
 	
 	
 	@PostMapping
-	public EstudianteResponseDTO grabar(@RequestBody EstudianteRequestDTO dto) {
+	public ResponseEntity<EstudianteResponseDTO> grabar(@RequestBody EstudianteRequestDTO dto) {
 		var stud = EstudianteMapper.toEntity(dto);
 		var grabado = service.grabar(stud);
-		return EstudianteMapper.toDTO(grabado);
+		return ResponseEntity.status(HttpStatus.CREATED).body(EstudianteMapper.toDTO(grabado));
 	}
 	
 	@DeleteMapping("/{id}")
-	public void eliminar(@PathVariable Long id) {
+	public ResponseEntity<?> eliminar(@PathVariable Long id) {
 		service.eliminar(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 }

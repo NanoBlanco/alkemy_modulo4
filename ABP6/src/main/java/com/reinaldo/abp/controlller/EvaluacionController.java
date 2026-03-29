@@ -2,6 +2,8 @@ package com.reinaldo.abp.controlller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,13 +27,13 @@ public class EvaluacionController {
 	private final EvaluacionService service;
 	
 	@PostMapping("/inscripcion/{id}")
-	public EvaluacionResponseDTO grabar(
+	public ResponseEntity<EvaluacionResponseDTO> grabar(
 			@PathVariable Long id, 
 			@RequestBody EvaluacionRequestDTO dto) {
 		
 		var eval = EvaluacionMapper.toEntity(dto);
 		var grabado = service.grabar(id, eval);
-		return EvaluacionMapper.toDTO(grabado);
+		return ResponseEntity.status(HttpStatus.CREATED).body(EvaluacionMapper.toDTO(grabado));
 	}
 	
 	@GetMapping

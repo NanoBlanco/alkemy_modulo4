@@ -2,6 +2,8 @@ package com.reinaldo.abp.controlller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +25,10 @@ public class CursoController {
 	private final CursoService service;
 	
 	@PostMapping
-	public CursoResponseDTO grabar(@RequestBody CursoRequestDTO dto) {
+	public ResponseEntity<CursoResponseDTO> grabar(@RequestBody CursoRequestDTO dto) {
 		var curso = CursoMapper.toEntity(dto);
 		var grabado = service.grabar(curso);
-		return CursoMapper.toDTO(grabado);
+		return ResponseEntity.status(HttpStatus.CREATED).body(CursoMapper.toDTO(grabado));
 	}
 	
 	@GetMapping

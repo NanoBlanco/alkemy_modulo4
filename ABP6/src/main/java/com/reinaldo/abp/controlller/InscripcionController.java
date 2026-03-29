@@ -2,6 +2,8 @@ package com.reinaldo.abp.controlller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,10 +25,10 @@ public class InscripcionController {
 	private final InscripcionService service;
 	
 	@PostMapping
-	public InscripcionResponseDTO grabar(@RequestBody InscripcionRequestDTO dto) {
+	public ResponseEntity<InscripcionResponseDTO> grabar(@RequestBody InscripcionRequestDTO dto) {
 		var inscripcion = service.grabar(dto.estudianteId(), dto.cursoId());
 		
-		return InscripcionMapper.toDTO(inscripcion);
+		return ResponseEntity.status(HttpStatus.CREATED).body(InscripcionMapper.toDTO(inscripcion));
 	}
 	
 	@GetMapping
